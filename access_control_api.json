@@ -1,0 +1,2463 @@
+{
+  "info": {
+    "title": "Access Control Api",
+    "version": "v1"
+  },
+  "paths": {
+    "/v1/data-permissions": {
+      "get": {
+        "summary": "Lists all data permissions.",
+        "operationId": "ListDataPermissions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/permissionsListDataPermissionsResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "Options for ordering the list of data permissions returned.",
+            "name": "order_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ORDER_BY_NAME_ASC"
+                ]
+              }
+            }
+          },
+          {
+            "description": "The number of data permissions that are to be retrieved.\n\nRequired.",
+            "name": "page_size",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "description": "The token of the page the results are to be retrieved from.",
+            "name": "page_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiPermissions"
+        ],
+        "x-section": "Permissions",
+        "x-list-consistency-level": "BEST_EFFORT",
+        "x-permission-scopes": [
+          "access_control:read",
+          "access_control.data_permissions:read"
+        ]
+      },
+      "post": {
+        "summary": "Creates a data permission.",
+        "operationId": "CreateDataPermission",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/permissionsDataPermission"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "AccessControlApiPermissions"
+        ],
+        "x-section": "Permissions",
+        "x-permission-scopes": [
+          "access_control:write",
+          "access_control.data_permissions:write"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/permissionsCreateDataPermissionRequest"
+        }
+      }
+    },
+    "/v1/data-permissions/{data_permission.id}": {
+      "put": {
+        "summary": "Updates a data permission.",
+        "operationId": "UpdateDataPermission",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/permissionsDataPermission"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The ID of the data permission.",
+            "name": "data_permission.id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiPermissions"
+        ],
+        "x-section": "Permissions",
+        "x-permission-scopes": [
+          "access_control:write",
+          "access_control.data_permissions:write"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/permissionsUpdateDataPermissionRequest"
+        }
+      }
+    },
+    "/v1/data-permissions/{id}": {
+      "get": {
+        "summary": "Retrieves a data permission using its ID.",
+        "operationId": "GetDataPermission",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/permissionsDataPermission"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The ID of the data permission that is to be retrieved.",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiPermissions"
+        ],
+        "x-section": "Permissions",
+        "x-permission-scopes": [
+          "access_control:read",
+          "access_control.data_permissions:read"
+        ]
+      },
+      "delete": {
+        "summary": "Deletes a data permission.",
+        "operationId": "DeleteDataPermission",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The ID of the data permission that is to be deleted.",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiPermissions"
+        ],
+        "x-section": "Permissions",
+        "x-permission-scopes": [
+          "access_control:write",
+          "access_control.data_permissions:write"
+        ]
+      }
+    },
+    "/v1/data-permissions:batchGet": {
+      "get": {
+        "summary": "Retrieves one or more data permissions using their IDs.",
+        "operationId": "BatchGetDataPermissions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/permissionsBatchGetDataPermissionsResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "A list of the IDs of data permissions that are to be retrieved.\n\nRequired.\nMin length: 1 characters.",
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiPermissions"
+        ],
+        "x-section": "Permissions",
+        "x-permission-scopes": [
+          "access_control:read",
+          "access_control.data_permissions:read"
+        ]
+      }
+    },
+    "/v1/vault-permissions": {
+      "get": {
+        "summary": "Lists all Vault permissions.",
+        "operationId": "ListVaultPermissions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/permissionsListVaultPermissionsResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "A list of role IDs that are associated with the data permissions to be retrieved.",
+            "name": "associated_role_ids",
+            "in": "query",
+            "required": false,
+            "x-release-info": {
+              "noticeVersion": {
+                "major": 3
+              },
+              "releaseVersion": {
+                "major": 5
+              },
+              "changeType": "REMOVE_FIELD",
+              "description": "Deprecated in favour of `roles.ListRoleVaultPermissionAssociations`, followed by a call to `BatchGetVaultPermissions`, which enables the retrieval of VaultPermission IDs associated to Role IDs, which can then be used to fetch the relevant Vault Permissions"
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Options for ordering the list of Vault permissions returned.",
+            "name": "order_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ORDER_BY_ID_ASC"
+                ]
+              }
+            }
+          },
+          {
+            "description": "The number of Vault permissions that are to be retrieved.\n\nRequired.",
+            "name": "page_size",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "description": "The token of the page the results are to be retrieved from.",
+            "name": "page_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiPermissions"
+        ],
+        "x-section": "Permissions",
+        "x-list-consistency-level": "BEST_EFFORT",
+        "x-permission-scopes": [
+          "access_control:read",
+          "access_control.vault_permissions:read"
+        ]
+      }
+    },
+    "/v1/vault-permissions/{id}": {
+      "get": {
+        "summary": "Retrieves a Vault permission using its ID.",
+        "operationId": "GetVaultPermission",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/permissionsVaultPermission"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The ID of the Vault permission that is to be retrieved.",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiPermissions"
+        ],
+        "x-section": "Permissions",
+        "x-permission-scopes": [
+          "access_control:read",
+          "access_control.vault_permissions:read"
+        ]
+      }
+    },
+    "/v1/vault-permissions:batchGet": {
+      "get": {
+        "summary": "Retrieves one or more Vault permissions using their IDs.",
+        "operationId": "BatchGetVaultPermissions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/permissionsBatchGetVaultPermissionsResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "A list of the IDs of Vault permissions that are to be retrieved.\n\nRequired.\nMin length: 1 characters.",
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiPermissions"
+        ],
+        "x-section": "Permissions",
+        "x-permission-scopes": [
+          "access_control:read",
+          "access_control.vault_permissions:read"
+        ]
+      }
+    },
+    "/v1/role-data-permission-assocs": {
+      "get": {
+        "summary": "Lists all associations between Roles and data permissions, subject to filters and pagination.",
+        "operationId": "ListRoleDataPermissionAssocs",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rolesListRoleDataPermissionAssocsResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "order_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ORDER_BY_ROLE_ID_ASC"
+                ]
+              }
+            }
+          },
+          {
+            "name": "role_id",
+            "in": "query",
+            "required": false,
+            "x-release-info": {
+              "releaseVersion": {
+                "major": 1,
+                "minor": 12
+              },
+              "changeType": "ADD_FIELD",
+              "description": "Extend API to filter by roleID"
+            },
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "data_permission_id",
+            "in": "query",
+            "required": false,
+            "x-release-info": {
+              "noticeVersion": {
+                "major": 2,
+                "minor": 3
+              },
+              "releaseVersion": {
+                "major": 4
+              },
+              "changeType": "REMOVE_FIELD",
+              "description": "Deprecated in favour of data_permission_ids"
+            },
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "data_permission_ids",
+            "in": "query",
+            "required": false,
+            "x-release-info": {
+              "releaseVersion": {
+                "major": 2,
+                "minor": 3
+              },
+              "changeType": "ADD_FIELD",
+              "description": "Extend API to filter by list of data permission IDs"
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "The number of associations that are to be retrieved per page.\n\nRequired.",
+            "name": "page_size",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "description": "The token of the page the results are to be retrieved from.",
+            "name": "page_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiRoles"
+        ],
+        "x-section": "Roles",
+        "x-release-info": {
+          "releaseVersion": {
+            "major": 1,
+            "minor": 10
+          },
+          "changeType": "ADD_METHOD"
+        },
+        "x-list-consistency-level": "BEST_EFFORT",
+        "x-permission-scopes": [
+          "access_control:read",
+          "access_control.role_data_permission_assocs:read"
+        ]
+      },
+      "post": {
+        "summary": "Creates an association between a Role and a data permission.",
+        "operationId": "CreateRoleDataPermissionAssoc",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rolesRoleDataPermissionAssoc"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "AccessControlApiRoles"
+        ],
+        "x-section": "Roles",
+        "x-release-info": {
+          "releaseVersion": {
+            "major": 1,
+            "minor": 10
+          },
+          "changeType": "ADD_METHOD"
+        },
+        "x-permission-scopes": [
+          "access_control:write",
+          "access_control.role_data_permission_assocs:write"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/rolesCreateRoleDataPermissionAssocRequest"
+        }
+      }
+    },
+    "/v1/role-data-permission-assocs/{id}": {
+      "get": {
+        "summary": "Retrieves an association between a Role and a data permission based on the association's ID.",
+        "operationId": "GetRoleDataPermissionAssoc",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rolesRoleDataPermissionAssoc"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The ID of the association between a Role and a data permission that is to be retrieved.",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiRoles"
+        ],
+        "x-section": "Roles",
+        "x-release-info": {
+          "releaseVersion": {
+            "major": 1,
+            "minor": 10
+          },
+          "changeType": "ADD_METHOD"
+        },
+        "x-permission-scopes": [
+          "access_control:read",
+          "access_control.role_data_permission_assocs:read"
+        ]
+      },
+      "delete": {
+        "summary": "Deletes an association between a Role and a data permission.",
+        "operationId": "DeleteRoleDataPermissionAssoc",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The ID of the association that is to be deleted between a Role and a data permission.",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiRoles"
+        ],
+        "x-section": "Roles",
+        "x-release-info": {
+          "releaseVersion": {
+            "major": 1,
+            "minor": 10
+          },
+          "changeType": "ADD_METHOD"
+        },
+        "x-permission-scopes": [
+          "access_control:write",
+          "access_control.role_data_permission_assocs:write"
+        ]
+      }
+    },
+    "/v1/role-vault-permission-assocs": {
+      "get": {
+        "summary": "Lists all associations between Roles and Vault permissions, subject to filters and pagination.",
+        "operationId": "ListRoleVaultPermissionAssocs",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rolesListRoleVaultPermissionAssocsResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "order_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ORDER_BY_ROLE_ID_ASC"
+                ]
+              }
+            }
+          },
+          {
+            "description": "Filter by Role ID.",
+            "name": "role_id",
+            "in": "query",
+            "required": false,
+            "x-release-info": {
+              "releaseVersion": {
+                "major": 1,
+                "minor": 12
+              },
+              "changeType": "ADD_FIELD",
+              "description": "Extend API filter capabilities"
+            },
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by Vault permission ID.",
+            "name": "vault_permission_id",
+            "in": "query",
+            "required": false,
+            "x-release-info": {
+              "releaseVersion": {
+                "major": 1,
+                "minor": 12
+              },
+              "changeType": "ADD_FIELD",
+              "description": "Extend API filter capabilities"
+            },
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The number of associations that are to be retrieved per page.\n\nRequired.",
+            "name": "page_size",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "description": "The token of the page the results are to be retrieved from.",
+            "name": "page_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiRoles"
+        ],
+        "x-section": "Roles",
+        "x-release-info": {
+          "releaseVersion": {
+            "major": 1,
+            "minor": 10
+          },
+          "changeType": "ADD_METHOD"
+        },
+        "x-list-consistency-level": "BEST_EFFORT",
+        "x-permission-scopes": [
+          "access_control:read",
+          "access_control.role_vault_permission_assocs:read"
+        ]
+      },
+      "post": {
+        "summary": "Creates an association between a Role and a Vault permission.",
+        "operationId": "CreateRoleVaultPermissionAssoc",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rolesRoleVaultPermissionAssoc"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "AccessControlApiRoles"
+        ],
+        "x-section": "Roles",
+        "x-release-info": {
+          "releaseVersion": {
+            "major": 1,
+            "minor": 10
+          },
+          "changeType": "ADD_METHOD"
+        },
+        "x-permission-scopes": [
+          "access_control:write",
+          "access_control.role_vault_permission_assocs:write"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/rolesCreateRoleVaultPermissionAssocRequest"
+        }
+      }
+    },
+    "/v1/role-vault-permission-assocs/{id}": {
+      "get": {
+        "summary": "Retrieves an association between a Role and a Vault permission based on the association's ID.",
+        "operationId": "GetRoleVaultPermissionAssoc",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rolesRoleVaultPermissionAssoc"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The ID of the association between a Role and a Vault permission that is to be retrieved.",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiRoles"
+        ],
+        "x-section": "Roles",
+        "x-release-info": {
+          "releaseVersion": {
+            "major": 1,
+            "minor": 10
+          },
+          "changeType": "ADD_METHOD"
+        },
+        "x-permission-scopes": [
+          "access_control:read",
+          "access_control.role_vault_permission_assocs:read"
+        ]
+      },
+      "delete": {
+        "summary": "Deletes an association between a Role and a Vault permission.",
+        "operationId": "DeleteRoleVaultPermissionAssoc",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The ID of the association that is to be deleted between a Role and a Vault permission.",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiRoles"
+        ],
+        "x-section": "Roles",
+        "x-release-info": {
+          "releaseVersion": {
+            "major": 1,
+            "minor": 10
+          },
+          "changeType": "ADD_METHOD"
+        },
+        "x-permission-scopes": [
+          "access_control:write",
+          "access_control.role_vault_permission_assocs:write"
+        ]
+      }
+    },
+    "/v1/roles": {
+      "get": {
+        "summary": "Lists all Roles subject to filters and pagination.",
+        "operationId": "ListRoles",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rolesListRolesResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "order_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ORDER_BY_CREATE_TIMESTAMP_ASC"
+                ]
+              }
+            }
+          },
+          {
+            "schema": {
+              "$ref": "#/components/schemas/ListRolesRequestDisplayNamesPatternMatch",
+              "description": "Filter by using pattern matching on display names."
+            },
+            "name": "display_names_pattern_match",
+            "in": "query",
+            "required": false
+          },
+          {
+            "schema": {
+              "$ref": "#/components/schemas/ListRolesRequestExternalReferencesPatternMatch",
+              "description": "Filter by using pattern matching on external references."
+            },
+            "name": "external_references_pattern_match",
+            "in": "query",
+            "required": false
+          },
+          {
+            "description": "The number of roles that are to be retrieved per page.\n\nRequired.",
+            "name": "page_size",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "description": "The token of the page the results are to be retrieved from.",
+            "name": "page_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiRoles"
+        ],
+        "x-section": "Roles",
+        "x-list-consistency-level": "BEST_EFFORT",
+        "x-permission-scopes": [
+          "access_control:read",
+          "access_control.roles:read"
+        ]
+      },
+      "post": {
+        "summary": "Creates a Role.",
+        "operationId": "CreateRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rolesRole"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "AccessControlApiRoles"
+        ],
+        "x-section": "Roles",
+        "x-release-info": {
+          "noticeVersion": {
+            "major": 3,
+            "minor": 1
+          },
+          "releaseVersion": {
+            "major": 5
+          },
+          "changeType": "ADD_ERROR",
+          "featureFlag": "WFLOW_182_ROLES_CHARACTER_VALIDATION"
+        },
+        "x-permission-scopes": [
+          "access_control:write",
+          "access_control.roles:write"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/rolesCreateRoleRequest"
+        }
+      }
+    },
+    "/v1/roles/{id}": {
+      "get": {
+        "summary": "Retrieves a Role based on the Role's ID.",
+        "operationId": "GetRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rolesRole"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The ID of the Role that is to be retrieved.",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiRoles"
+        ],
+        "x-section": "Roles",
+        "x-release-info": {
+          "releaseVersion": {
+            "major": 1,
+            "minor": 10
+          },
+          "changeType": "ADD_METHOD"
+        },
+        "x-permission-scopes": [
+          "access_control:read",
+          "access_control.roles:read"
+        ]
+      },
+      "delete": {
+        "summary": "Deactivates a Role.",
+        "operationId": "DeleteRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The ID of the Role that is to be deleted.",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiRoles"
+        ],
+        "x-section": "Roles",
+        "x-release-info": {
+          "releaseVersion": {
+            "major": 1,
+            "minor": 10
+          },
+          "changeType": "ADD_METHOD"
+        },
+        "x-permission-scopes": [
+          "access_control:write",
+          "access_control.roles:write"
+        ]
+      }
+    },
+    "/v1/roles/{role.id}": {
+      "put": {
+        "summary": "Updates a Role.",
+        "operationId": "UpdateRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rolesRole"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The ID of the Role.",
+            "name": "role.id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiRoles"
+        ],
+        "x-section": "Roles",
+        "x-release-info": {
+          "releaseVersion": {
+            "major": 1,
+            "minor": 10
+          },
+          "changeType": "ADD_METHOD"
+        },
+        "x-permission-scopes": [
+          "access_control:write",
+          "access_control.roles:write"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/rolesUpdateRoleRequest"
+        }
+      }
+    },
+    "/v1/roles:batchGet": {
+      "get": {
+        "summary": "Retrieves one or more Roles based on their IDs.",
+        "operationId": "BatchGetRoles",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rolesBatchGetRolesResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "A list of the IDs of roles that are to be retrieved.\n\nRequired.\nMin length: 1 characters.",
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "AccessControlApiRoles"
+        ],
+        "x-section": "Roles",
+        "x-release-info": {
+          "releaseVersion": {
+            "major": 1,
+            "minor": 10
+          },
+          "changeType": "ADD_METHOD"
+        },
+        "x-permission-scopes": [
+          "access_control:read",
+          "access_control.roles:read"
+        ]
+      }
+    }
+  },
+  "x-sections": {
+    "Permissions": {},
+    "Roles": {}
+  },
+  "openapi": "3.0.1",
+  "components": {
+    "schemas": {
+      "permissionsActionVaultObjectType": {
+        "type": "string",
+        "enum": [
+          "ACTION_VAULT_OBJECT_TYPE_UNKNOWN",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_AUDIT_LOG_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_AUDIT_LOG_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_AUDIT_LOG_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_AUDIT_LOG_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_CUSTOMER_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_CUSTOMER_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_CUSTOMER_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_CUSTOMER_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_CUSTOMER_ADDRESS_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_CUSTOMER_ADDRESS_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_CUSTOMER_ADDRESS_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_CUSTOMER_ADDRESS_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_FLAG_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_FLAG_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_FLAG_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_FLAG_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_FLAG_DEFINITION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_FLAG_DEFINITION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_FLAG_DEFINITION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_FLAG_DEFINITION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_INTERNAL_ACCOUNT_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_INTERNAL_ACCOUNT_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_INTERNAL_ACCOUNT_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_INTERNAL_ACCOUNT_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PAYEE_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PAYEE_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PAYEE_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PAYEE_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_DEVICE_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_DEVICE_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_DEVICE_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_DEVICE_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_DEVICE_LINK_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_DEVICE_LINK_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_DEVICE_LINK_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_DEVICE_LINK_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_JOB_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_JOB_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_JOB_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_JOB_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_VERSION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_VERSION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_VERSION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_VERSION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_POSTING_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_POSTING_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_POSTING_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_POSTING_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_VERSION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_VERSION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_VERSION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_VERSION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_DEFINITION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_DEFINITION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_DEFINITION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_DEFINITION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_VERSION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_VERSION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_VERSION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_VERSION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_SERVICE_ACCOUNT_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_SERVICE_ACCOUNT_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_SERVICE_ACCOUNT_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_SERVICE_ACCOUNT_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_TICKET_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_TICKET_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_TICKET_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_TICKET_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_VERSION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_VERSION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_VERSION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_VERSION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_UNSOLICITED_MESSAGE_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_UNSOLICITED_MESSAGE_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_UNSOLICITED_MESSAGE_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_UNSOLICITED_MESSAGE_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_EISCD_REPORT_DESCRIPTOR_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_EISCD_REPORT_DESCRIPTOR_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_EISCD_REPORT_DESCRIPTOR_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_EISCD_REPORT_DESCRIPTOR_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_MODULUS_CHECK_WEIGHT_TABLE_DESCRIPTOR_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_MODULUS_CHECK_WEIGHT_TABLE_DESCRIPTOR_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_MODULUS_CHECK_WEIGHT_TABLE_DESCRIPTOR_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_MODULUS_CHECK_WEIGHT_TABLE_DESCRIPTOR_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_UK_BANK_ACCOUNT_NUMBER_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_UK_BANK_ACCOUNT_NUMBER_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_UK_BANK_ACCOUNT_NUMBER_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_UK_BANK_ACCOUNT_NUMBER_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_MIGRATION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_MIGRATION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_MIGRATION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_MIGRATION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_BATCH_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_BATCH_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_BATCH_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_BATCH_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_SUBMISSION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_SUBMISSION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_SUBMISSION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_SUBMISSION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_POSTING_INSTRUCTION_BATCH_ASYNC_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_POSTING_INSTRUCTION_BATCH_ASYNC_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_POSTING_INSTRUCTION_BATCH_ASYNC_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_POSTING_INSTRUCTION_BATCH_ASYNC_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_PARAMETER_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_PARAMETER_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_PARAMETER_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_PARAMETER_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_PARAMETERVALUE_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_PARAMETERVALUE_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_PARAMETERVALUE_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_PARAMETERVALUE_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_POLICY_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_POLICY_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_POLICY_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_POLICY_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_TRANSACTION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_TRANSACTION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_TRANSACTION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_TRANSACTION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_VERSION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_VERSION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_VERSION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_VERSION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PLAN_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PLAN_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PLAN_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PLAN_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PLAN_UPDATE_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PLAN_UPDATE_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PLAN_UPDATE_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PLAN_UPDATE_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_PLAN_ASSOC_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_PLAN_ASSOC_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_PLAN_ASSOC_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_PLAN_ASSOC_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_APPS_NOTE_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_APPS_NOTE_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_APPS_NOTE_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_APPS_NOTE_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_APPS_WORKFLOW_INSTANTIATION_LINK_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_APPS_WORKFLOW_INSTANTIATION_LINK_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_APPS_WORKFLOW_INSTANTIATION_LINK_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_APPS_WORKFLOW_INSTANTIATION_LINK_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_XPL_TRANSACTION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_XPL_TRANSACTION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_XPL_TRANSACTION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_XPL_TRANSACTION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_EMPLOYEE_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_EMPLOYEE_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_EMPLOYEE_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_EMPLOYEE_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_EMPLOYEE_ACTION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_EMPLOYEE_ACTION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_EMPLOYEE_ACTION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_EMPLOYEE_ACTION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_CONTRACT_PARAMETER_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_CONTRACT_PARAMETER_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_CONTRACT_PARAMETER_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_CONTRACT_PARAMETER_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_TRANSACTION_LEDGER_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_TRANSACTION_LEDGER_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_TRANSACTION_LEDGER_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_TRANSACTION_LEDGER_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_SCHEDULE_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_SCHEDULE_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_SCHEDULE_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_SCHEDULE_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_THREAD_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_THREAD_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_THREAD_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_THREAD_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_DATA_PERMISSION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_DATA_PERMISSION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_DATA_PERMISSION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_DATA_PERMISSION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_PERMISSION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_PERMISSION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_PERMISSION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_PERMISSION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_VAULT_PERMISSION_ASSOC_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_VAULT_PERMISSION_ASSOC_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_VAULT_PERMISSION_ASSOC_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_VAULT_PERMISSION_ASSOC_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_DATA_PERMISSION_ASSOC_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_DATA_PERMISSION_ASSOC_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_DATA_PERMISSION_ASSOC_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_DATA_PERMISSION_ASSOC_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_THREAD_HISTORY_ENTRY_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_THREAD_HISTORY_ENTRY_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_THREAD_HISTORY_ENTRY_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_THREAD_HISTORY_ENTRY_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_WORKFLOW_DEFINITION_SPECIFIER_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_WORKFLOW_DEFINITION_SPECIFIER_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_WORKFLOW_DEFINITION_SPECIFIER_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_WORKFLOW_DEFINITION_SPECIFIER_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CUSTOM_ATTRIBUTE_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CUSTOM_ATTRIBUTE_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CUSTOM_ATTRIBUTE_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CUSTOM_ATTRIBUTE_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CONTRACT_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CONTRACT_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CONTRACT_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CONTRACT_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CONTRACT_VERSION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CONTRACT_VERSION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CONTRACT_VERSION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CONTRACT_VERSION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_VERSION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_VERSION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_VERSION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_VERSION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_CONTRACT_VERSION_ASSOC_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_CONTRACT_VERSION_ASSOC_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_CONTRACT_VERSION_ASSOC_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_CONTRACT_VERSION_ASSOC_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_ACCOUNT_ASSOC_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_ACCOUNT_ASSOC_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_ACCOUNT_ASSOC_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_ACCOUNT_ASSOC_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_COMBINED_ATTRIBUTE_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_COMBINED_ATTRIBUTE_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_COMBINED_ATTRIBUTE_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_COMBINED_ATTRIBUTE_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_VERSION_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_VERSION_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_VERSION_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_VERSION_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_ACCOUNT_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_ACCOUNT_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_ACCOUNT_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_ACCOUNT_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_DOCUMENT_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_DOCUMENT_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_DOCUMENT_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_DOCUMENT_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENTS_HUB_SCHEME_MESSAGE_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENTS_HUB_SCHEME_MESSAGE_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENTS_HUB_SCHEME_MESSAGE_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENTS_HUB_SCHEME_MESSAGE_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_CALENDAR_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_CALENDAR_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_CALENDAR_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_CALENDAR_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_CALENDAR_EVENT_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_CALENDAR_EVENT_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_CALENDAR_EVENT_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_CALENDAR_EVENT_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_ACCOUNT_CONVERSION_RULE_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_ACCOUNT_CONVERSION_RULE_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_ACCOUNT_CONVERSION_RULE_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_ACCOUNT_CONVERSION_RULE_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_BALANCE_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_BALANCE_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_BALANCE_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_BALANCE_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_EVENT_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_EVENT_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_EVENT_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_EVENT_DELETE_OR_DISABLE",
+          "ACTION_VAULT_OBJECT_TYPE_LEDGER_BALANCE_VIEW",
+          "ACTION_VAULT_OBJECT_TYPE_LEDGER_BALANCE_CREATE",
+          "ACTION_VAULT_OBJECT_TYPE_LEDGER_BALANCE_EDIT",
+          "ACTION_VAULT_OBJECT_TYPE_LEDGER_BALANCE_DELETE_OR_DISABLE"
+        ],
+        "default": "ACTION_VAULT_OBJECT_TYPE_UNKNOWN",
+        "x-enum-value-descriptions": {
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_CREATE": "Create an Account.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_DELETE_OR_DISABLE": "Delete or disable an Account.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_EDIT": "Edit an Account.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_MIGRATION_CREATE": "Create a Account Migration.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_MIGRATION_DELETE_OR_DISABLE": "Delete or disable a Account Migration.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_MIGRATION_EDIT": "Edit a Account Migration.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_MIGRATION_VIEW": "View a Account Migration.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_PLAN_ASSOC_CREATE": "Create an Account-Plan Association.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_PLAN_ASSOC_DELETE_OR_DISABLE": "Delete or disable an Account-Plan Association.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_PLAN_ASSOC_EDIT": "Edit an Account-Plan Association.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_PLAN_ASSOC_VIEW": "View an Account-Plan Association.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_BATCH_CREATE": "Create an Account Update Batch.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_BATCH_DELETE_OR_DISABLE": "Delete or disable an Account Update Batch.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_BATCH_EDIT": "Edit an Account Update Batch.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_BATCH_VIEW": "View an Account Update Batch.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_CREATE": "Create an Account Update.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_DELETE_OR_DISABLE": "Delete or disable an Account Update.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_EDIT": "Edit an Account Update.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_VIEW": "View an Account Update.",
+          "ACTION_VAULT_OBJECT_TYPE_ACCOUNT_VIEW": "View an Account.",
+          "ACTION_VAULT_OBJECT_TYPE_AUDIT_LOG_CREATE": "Create an Audit Log.",
+          "ACTION_VAULT_OBJECT_TYPE_AUDIT_LOG_DELETE_OR_DISABLE": "Delete or disable an Audit Log.",
+          "ACTION_VAULT_OBJECT_TYPE_AUDIT_LOG_EDIT": "Edit an Audit Log.",
+          "ACTION_VAULT_OBJECT_TYPE_AUDIT_LOG_VIEW": "View an Audit Log.",
+          "ACTION_VAULT_OBJECT_TYPE_BALANCE_CREATE": "Create a Balance.",
+          "ACTION_VAULT_OBJECT_TYPE_BALANCE_DELETE_OR_DISABLE": "Delete or disable a Balance.",
+          "ACTION_VAULT_OBJECT_TYPE_BALANCE_EDIT": "Edit a Balance.",
+          "ACTION_VAULT_OBJECT_TYPE_BALANCE_VIEW": "View a Balance.",
+          "ACTION_VAULT_OBJECT_TYPE_CALENDAR_CREATE": "Create a Calendar.",
+          "ACTION_VAULT_OBJECT_TYPE_CALENDAR_DELETE_OR_DISABLE": "Delete or disable a Calendar.",
+          "ACTION_VAULT_OBJECT_TYPE_CALENDAR_EDIT": "Edit a Calendar.",
+          "ACTION_VAULT_OBJECT_TYPE_CALENDAR_EVENT_CREATE": "Create a Calendar Event.",
+          "ACTION_VAULT_OBJECT_TYPE_CALENDAR_EVENT_DELETE_OR_DISABLE": "Delete or disable a Calendar Event.",
+          "ACTION_VAULT_OBJECT_TYPE_CALENDAR_EVENT_EDIT": "Edit a Calendar Event.",
+          "ACTION_VAULT_OBJECT_TYPE_CALENDAR_EVENT_VIEW": "View a Calendar Event.",
+          "ACTION_VAULT_OBJECT_TYPE_CALENDAR_VIEW": "View a Calendar.",
+          "ACTION_VAULT_OBJECT_TYPE_CUSTOMER_ADDRESS_CREATE": "Create a Customer Address.",
+          "ACTION_VAULT_OBJECT_TYPE_CUSTOMER_ADDRESS_DELETE_OR_DISABLE": "Delete or disable a Customer Address.",
+          "ACTION_VAULT_OBJECT_TYPE_CUSTOMER_ADDRESS_EDIT": "Edit a Customer Address.",
+          "ACTION_VAULT_OBJECT_TYPE_CUSTOMER_ADDRESS_VIEW": "View a Customer Address.",
+          "ACTION_VAULT_OBJECT_TYPE_CUSTOMER_CREATE": "Create a Customer.",
+          "ACTION_VAULT_OBJECT_TYPE_CUSTOMER_DELETE_OR_DISABLE": "Delete or disable a Customer.",
+          "ACTION_VAULT_OBJECT_TYPE_CUSTOMER_EDIT": "Edit a Customer.",
+          "ACTION_VAULT_OBJECT_TYPE_CUSTOMER_VIEW": "View a Customer.",
+          "ACTION_VAULT_OBJECT_TYPE_DATA_PERMISSION_CREATE": "Create a Data Permission.",
+          "ACTION_VAULT_OBJECT_TYPE_DATA_PERMISSION_DELETE_OR_DISABLE": "Delete or disable a Data Permission.",
+          "ACTION_VAULT_OBJECT_TYPE_DATA_PERMISSION_EDIT": "Edit a Data Permission.",
+          "ACTION_VAULT_OBJECT_TYPE_DATA_PERMISSION_VIEW": "View a Data Permission.",
+          "ACTION_VAULT_OBJECT_TYPE_DOCUMENT_CREATE": "Create a Document.",
+          "ACTION_VAULT_OBJECT_TYPE_DOCUMENT_DELETE_OR_DISABLE": "Delete or disable a Document.",
+          "ACTION_VAULT_OBJECT_TYPE_DOCUMENT_EDIT": "Edit a Document.",
+          "ACTION_VAULT_OBJECT_TYPE_DOCUMENT_VIEW": "View a Document.",
+          "ACTION_VAULT_OBJECT_TYPE_EISCD_REPORT_DESCRIPTOR_CREATE": "Create an EISCD Report Descriptor.",
+          "ACTION_VAULT_OBJECT_TYPE_EISCD_REPORT_DESCRIPTOR_DELETE_OR_DISABLE": "Delete or disable an EISCD Report Descriptor.",
+          "ACTION_VAULT_OBJECT_TYPE_EISCD_REPORT_DESCRIPTOR_EDIT": "Edit an EISCD Report Descriptor.",
+          "ACTION_VAULT_OBJECT_TYPE_EISCD_REPORT_DESCRIPTOR_VIEW": "View an EISCD Report Descriptor.",
+          "ACTION_VAULT_OBJECT_TYPE_EMPLOYEE_ACTION_CREATE": "Create an Employee Action.",
+          "ACTION_VAULT_OBJECT_TYPE_EMPLOYEE_ACTION_DELETE_OR_DISABLE": "Delete or disable an Employee Action.",
+          "ACTION_VAULT_OBJECT_TYPE_EMPLOYEE_ACTION_EDIT": "Edit an Employee Action.",
+          "ACTION_VAULT_OBJECT_TYPE_EMPLOYEE_ACTION_VIEW": "View an Employee Action.",
+          "ACTION_VAULT_OBJECT_TYPE_EMPLOYEE_CREATE": "Create an Employee.",
+          "ACTION_VAULT_OBJECT_TYPE_EMPLOYEE_DELETE_OR_DISABLE": "Delete or disable an Employee.",
+          "ACTION_VAULT_OBJECT_TYPE_EMPLOYEE_EDIT": "Edit an Employee.",
+          "ACTION_VAULT_OBJECT_TYPE_EMPLOYEE_VIEW": "View an Employee.",
+          "ACTION_VAULT_OBJECT_TYPE_FLAG_CREATE": "Create a Flag.",
+          "ACTION_VAULT_OBJECT_TYPE_FLAG_DEFINITION_CREATE": "Create a Flag Definition.",
+          "ACTION_VAULT_OBJECT_TYPE_FLAG_DEFINITION_DELETE_OR_DISABLE": "Delete or disable a Flag Definition.",
+          "ACTION_VAULT_OBJECT_TYPE_FLAG_DEFINITION_EDIT": "Edit a Flag Definition.",
+          "ACTION_VAULT_OBJECT_TYPE_FLAG_DEFINITION_VIEW": "View a Flag Definition.",
+          "ACTION_VAULT_OBJECT_TYPE_FLAG_DELETE_OR_DISABLE": "Delete or disable a Flag.",
+          "ACTION_VAULT_OBJECT_TYPE_FLAG_EDIT": "Edit a Flag.",
+          "ACTION_VAULT_OBJECT_TYPE_FLAG_VIEW": "View a Flag.",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_CONTRACT_PARAMETER_CREATE": "Create a Global Contract Parameter.",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_CONTRACT_PARAMETER_DELETE_OR_DISABLE": "Delete or disable a Global Contract Parameter.",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_CONTRACT_PARAMETER_EDIT": "Edit a Global Contract Parameter.",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_CONTRACT_PARAMETER_VIEW": "View a Global Contract Parameter.",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_PARAMETERVALUE_CREATE": "Create a Global Parameter Value.",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_PARAMETERVALUE_DELETE_OR_DISABLE": "Delete or disable a Global Parameter Value.",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_PARAMETERVALUE_EDIT": "Edit a Global Parameter Value.",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_PARAMETERVALUE_VIEW": "View a Global Parameter Value.",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_PARAMETER_CREATE": "Create a Global Parameter.",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_PARAMETER_DELETE_OR_DISABLE": "Delete or disable a Global Parameter.",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_PARAMETER_EDIT": "Edit a Global Parameter.",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_PARAMETER_VIEW": "View a Global Parameter.",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_TRANSACTION_LEDGER_CREATE": "Create a Global Transaction Ledger.",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_TRANSACTION_LEDGER_DELETE_OR_DISABLE": "Delete or disable a Global Transaction Ledger.",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_TRANSACTION_LEDGER_EDIT": "Edit a Global Transaction Ledger.",
+          "ACTION_VAULT_OBJECT_TYPE_GLOBAL_TRANSACTION_LEDGER_VIEW": "View a Global Transaction Ledger.",
+          "ACTION_VAULT_OBJECT_TYPE_INTERNAL_ACCOUNT_CREATE": "Create an Internal Account.",
+          "ACTION_VAULT_OBJECT_TYPE_INTERNAL_ACCOUNT_DELETE_OR_DISABLE": "Delete or disable an Internal Account.",
+          "ACTION_VAULT_OBJECT_TYPE_INTERNAL_ACCOUNT_EDIT": "Edit an Internal Account.",
+          "ACTION_VAULT_OBJECT_TYPE_INTERNAL_ACCOUNT_VIEW": "View an Internal Account.",
+          "ACTION_VAULT_OBJECT_TYPE_LEDGER_BALANCE_CREATE": "Create a Ledger Balance",
+          "ACTION_VAULT_OBJECT_TYPE_LEDGER_BALANCE_DELETE_OR_DISABLE": "Delete or disable a Ledger Balance",
+          "ACTION_VAULT_OBJECT_TYPE_LEDGER_BALANCE_EDIT": "Edit a Ledger Balance",
+          "ACTION_VAULT_OBJECT_TYPE_LEDGER_BALANCE_VIEW": "View a Ledger Balance",
+          "ACTION_VAULT_OBJECT_TYPE_MODULUS_CHECK_WEIGHT_TABLE_DESCRIPTOR_CREATE": "Create a Modulus Check Weight Table Descriptor.",
+          "ACTION_VAULT_OBJECT_TYPE_MODULUS_CHECK_WEIGHT_TABLE_DESCRIPTOR_DELETE_OR_DISABLE": "Delete or disable a Modulus Check Weight Table Descriptor.",
+          "ACTION_VAULT_OBJECT_TYPE_MODULUS_CHECK_WEIGHT_TABLE_DESCRIPTOR_EDIT": "Edit a Modulus Check Weight Table Descriptor.",
+          "ACTION_VAULT_OBJECT_TYPE_MODULUS_CHECK_WEIGHT_TABLE_DESCRIPTOR_VIEW": "View a Modulus Check Weight Table Descriptor.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYEE_CREATE": "Create a Payee.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYEE_DELETE_OR_DISABLE": "Delete or disable a Payee.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYEE_EDIT": "Edit a Payee.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYEE_VIEW": "View a Payee.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENTS_HUB_SCHEME_MESSAGE_CREATE": "Create a Payments Hub Scheme Message.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENTS_HUB_SCHEME_MESSAGE_DELETE_OR_DISABLE": "Delete or disable a Payments Hub Scheme Message.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENTS_HUB_SCHEME_MESSAGE_EDIT": "Edit a Payments Hub Scheme Message.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENTS_HUB_SCHEME_MESSAGE_VIEW": "View a Payments Hub Scheme Message.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_CREATE": "Create a Payment.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_DELETE_OR_DISABLE": "Delete or disable a Payment.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_DEVICE_CREATE": "Create a Payment Device.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_DEVICE_DELETE_OR_DISABLE": "Delete or disable a Payment Device.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_DEVICE_EDIT": "Edit a Payment Device.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_DEVICE_LINK_CREATE": "Create a Payment Device Link.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_DEVICE_LINK_DELETE_OR_DISABLE": "Delete or disable a Payment Device Link.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_DEVICE_LINK_EDIT": "Edit a Payment Device Link.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_DEVICE_LINK_VIEW": "View a Payment Device Link.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_DEVICE_VIEW": "View a Payment Device.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_EDIT": "Edit a Payment.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_SUBMISSION_CREATE": "Create a Payment Submission.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_SUBMISSION_DELETE_OR_DISABLE": "Delete or disable a Payment Submission.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_SUBMISSION_EDIT": "Edit a Payment Submission.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_SUBMISSION_VIEW": "View a Payment Submission.",
+          "ACTION_VAULT_OBJECT_TYPE_PAYMENT_VIEW": "View a Payment.",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_CREATE": "Create a Pipeline.",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_DELETE_OR_DISABLE": "Delete or disable a Pipeline.",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_EDIT": "Edit a Pipeline.",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_JOB_CREATE": "Create a Pipeline Job.",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_JOB_DELETE_OR_DISABLE": "Delete or disable a Pipeline Job.",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_JOB_EDIT": "Edit a Pipeline Job.",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_JOB_VIEW": "View a Pipeline Job.",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_VERSION_CREATE": "Create a Pipeline Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_VERSION_DELETE_OR_DISABLE": "Delete or disable a Pipeline Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_VERSION_EDIT": "Edit a Pipeline Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_VERSION_VIEW": "View a Pipeline Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PIPELINE_VIEW": "View a Pipeline.",
+          "ACTION_VAULT_OBJECT_TYPE_PLAN_CREATE": "Create a Plan.",
+          "ACTION_VAULT_OBJECT_TYPE_PLAN_DELETE_OR_DISABLE": "Delete or disable a Plan.",
+          "ACTION_VAULT_OBJECT_TYPE_PLAN_EDIT": "Edit a Plan.",
+          "ACTION_VAULT_OBJECT_TYPE_PLAN_UPDATE_CREATE": "Create a Plan Update.",
+          "ACTION_VAULT_OBJECT_TYPE_PLAN_UPDATE_DELETE_OR_DISABLE": "Delete or disable a Plan Update.",
+          "ACTION_VAULT_OBJECT_TYPE_PLAN_UPDATE_EDIT": "Edit a Plan Update.",
+          "ACTION_VAULT_OBJECT_TYPE_PLAN_UPDATE_VIEW": "View a Plan Update.",
+          "ACTION_VAULT_OBJECT_TYPE_PLAN_VIEW": "View a Plan.",
+          "ACTION_VAULT_OBJECT_TYPE_POLICY_CREATE": "Create a Policy.",
+          "ACTION_VAULT_OBJECT_TYPE_POLICY_DELETE_OR_DISABLE": "Delete or disable a Policy.",
+          "ACTION_VAULT_OBJECT_TYPE_POLICY_EDIT": "Edit a Policy.",
+          "ACTION_VAULT_OBJECT_TYPE_POLICY_VIEW": "View a Policy.",
+          "ACTION_VAULT_OBJECT_TYPE_POSTING_CREATE": "Create a Posting.",
+          "ACTION_VAULT_OBJECT_TYPE_POSTING_DELETE_OR_DISABLE": "Delete or disable a Posting.",
+          "ACTION_VAULT_OBJECT_TYPE_POSTING_EDIT": "Edit a Posting.",
+          "ACTION_VAULT_OBJECT_TYPE_POSTING_INSTRUCTION_BATCH_ASYNC_CREATE": "Create a Posting Instruction Batch.",
+          "ACTION_VAULT_OBJECT_TYPE_POSTING_INSTRUCTION_BATCH_ASYNC_DELETE_OR_DISABLE": "Delete or disable a Posting Instruction Batch.",
+          "ACTION_VAULT_OBJECT_TYPE_POSTING_INSTRUCTION_BATCH_ASYNC_EDIT": "Edit a Posting Instruction Batch.",
+          "ACTION_VAULT_OBJECT_TYPE_POSTING_INSTRUCTION_BATCH_ASYNC_VIEW": "View a Posting Instruction Batch.",
+          "ACTION_VAULT_OBJECT_TYPE_POSTING_VIEW": "View a Posting.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_CREATE": "Create a Product.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_DELETE_OR_DISABLE": "Delete or disable a Product.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_EDIT": "Edit a Product.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_ACCOUNT_CONVERSION_RULE_CREATE": "Create a Product Hub conversion rule",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_ACCOUNT_CONVERSION_RULE_DELETE_OR_DISABLE": "Delete or disable a Product Hub conversion rule",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_ACCOUNT_CONVERSION_RULE_EDIT": "Edit a Product Hub conversion rule",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_ACCOUNT_CONVERSION_RULE_VIEW": "View a Product Hub conversion rule",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_ACCOUNT_CREATE": "Create a Product Hub Account.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_ACCOUNT_DELETE_OR_DISABLE": "Delete or disable a Product Hub Account.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_ACCOUNT_EDIT": "Edit a Product Hub Account.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_ACCOUNT_VIEW": "View a Product Hub Account.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_COMBINED_ATTRIBUTE_CREATE": "Create a Product Hub Combined Attribute.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_COMBINED_ATTRIBUTE_DELETE_OR_DISABLE": "Delete or disable a Product Hub Combined Attribute.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_COMBINED_ATTRIBUTE_EDIT": "Edit a Product Hub Combined Attribute.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_COMBINED_ATTRIBUTE_VIEW": "View a Product Hub Combined Attribute.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CONTRACT_CREATE": "Create a Product Hub Contract.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CONTRACT_DELETE_OR_DISABLE": "Delete or disable a Product Hub Contract.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CONTRACT_EDIT": "Edit a Product Hub Contract.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CONTRACT_VERSION_CREATE": "Create a Product Hub Contract Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CONTRACT_VERSION_DELETE_OR_DISABLE": "Delete or disable a Product Hub Contract Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CONTRACT_VERSION_EDIT": "Edit a Product Hub Contract Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CONTRACT_VERSION_VIEW": "View a Product Hub Contract Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CONTRACT_VIEW": "View a Product Hub Contract.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CUSTOM_ATTRIBUTE_CREATE": "Create a Product Hub Custom Attribute.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CUSTOM_ATTRIBUTE_DELETE_OR_DISABLE": "Delete or disable a Product Hub Custom Attribute.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CUSTOM_ATTRIBUTE_EDIT": "Edit a Product Hub Custom Attribute.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_CUSTOM_ATTRIBUTE_VIEW": "View a Product Hub Custom Attribute.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_CONTRACT_VERSION_ASSOC_CREATE": "Create a Product Hub Group Contract Version Association.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_CONTRACT_VERSION_ASSOC_DELETE_OR_DISABLE": "Delete or disable a Product Hub Group Contract Version Association.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_CONTRACT_VERSION_ASSOC_EDIT": "Edit a Product Hub Group Contract Version Association.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_CONTRACT_VERSION_ASSOC_VIEW": "View a Product Hub Group Contract Version Association.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_CREATE": "Create a Product Hub Group.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_DELETE_OR_DISABLE": "Delete or disable a Product Hub Group.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_EDIT": "Edit a Product Hub Group.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_VERSION_CREATE": "Create a Product Hub Group Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_VERSION_DELETE_OR_DISABLE": "Delete or disable a Product Hub Group Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_VERSION_EDIT": "Edit a Product Hub Group Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_VERSION_VIEW": "View a Product Hub Group Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_GROUP_VIEW": "View a Product Hub Group.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_ACCOUNT_ASSOC_CREATE": "Create a Product Hub Product Account Association.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_ACCOUNT_ASSOC_DELETE_OR_DISABLE": "Delete or disable a Product Hub Product Account Association.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_ACCOUNT_ASSOC_EDIT": "Edit a Product Hub Product Account Association.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_ACCOUNT_ASSOC_VIEW": "View a Product Hub Product Account Association.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_CREATE": "Create a Product Hub Product.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_DELETE_OR_DISABLE": "Delete or disable a Product Hub Product.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_EDIT": "Edit a Product Hub Product.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_VERSION_CREATE": "Create a Product Hub Product Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_VERSION_DELETE_OR_DISABLE": "Delete or disable a Product Hub Product Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_VERSION_EDIT": "Edit a Product Hub Product Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_VERSION_VIEW": "View a Product Hub Product Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_PRODUCT_VIEW": "View a Product Hub Product.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_WORKFLOW_DEFINITION_SPECIFIER_CREATE": "Create a Product Hub Workflow Definition Specifier.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_WORKFLOW_DEFINITION_SPECIFIER_DELETE_OR_DISABLE": "Delete or disable a Product Hub Workflow Definition Specifier.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_WORKFLOW_DEFINITION_SPECIFIER_EDIT": "Edit a Product Hub Workflow Definition Specifier.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_HUB_WORKFLOW_DEFINITION_SPECIFIER_VIEW": "View a Product Hub Workflow Definition Specifier.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_VERSION_CREATE": "Create a Product Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_VERSION_DELETE_OR_DISABLE": "Delete or disable a Product Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_VERSION_EDIT": "Edit a Product Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_VERSION_VIEW": "View a Product Version.",
+          "ACTION_VAULT_OBJECT_TYPE_PRODUCT_VIEW": "View a Product.",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_DEFINITION_CREATE": "Create a Restriction Definition.",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_DEFINITION_DELETE_OR_DISABLE": "Delete or disable a Restriction Definition.",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_DEFINITION_EDIT": "Edit a Restriction Definition.",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_DEFINITION_VIEW": "View a Restriction Definition.",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_CREATE": "Create a Restriction Set.",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_CREATE": "Create a Restriction Set Definition.",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_DELETE_OR_DISABLE": "Delete or disable a Restriction Set Definition.",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_EDIT": "Edit a Restriction Set Definition.",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_VERSION_CREATE": "Create a Restriction Set Definition Version.",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_VERSION_DELETE_OR_DISABLE": "Delete or disable a Restriction Set Definition Version.",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_VERSION_EDIT": "Edit a Restriction Set Definition Version.",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_VERSION_VIEW": "View a Restriction Set Definition Version.",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_VIEW": "View a Restriction Set Definition.",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_DELETE_OR_DISABLE": "Delete or disable a Restriction Set.",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_EDIT": "Edit a Restriction Set.",
+          "ACTION_VAULT_OBJECT_TYPE_RESTRICTION_SET_VIEW": "View a Restriction Set.",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_CREATE": "Create a Role.",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_DATA_PERMISSION_ASSOC_CREATE": "Create a Role-Data Permission Association.",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_DATA_PERMISSION_ASSOC_DELETE_OR_DISABLE": "Delete or disable a Role-Data Permission Association.",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_DATA_PERMISSION_ASSOC_EDIT": "Edit a Role-Data Permission Association.",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_DATA_PERMISSION_ASSOC_VIEW": "View a Role-Data Permission Association.",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_DELETE_OR_DISABLE": "Delete or disable a Role.",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_EDIT": "Edit a Role.",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_VAULT_PERMISSION_ASSOC_CREATE": "Create a Role-Vault Permission Association.",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_VAULT_PERMISSION_ASSOC_DELETE_OR_DISABLE": "Delete or disable a Role-Vault Permission Association.",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_VAULT_PERMISSION_ASSOC_EDIT": "Edit a Role-Vault Permission Association.",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_VAULT_PERMISSION_ASSOC_VIEW": "View a Role-Vault Permission Association.",
+          "ACTION_VAULT_OBJECT_TYPE_ROLE_VIEW": "View a Role.",
+          "ACTION_VAULT_OBJECT_TYPE_SCHEDULE_CREATE": "Create a Schedule.",
+          "ACTION_VAULT_OBJECT_TYPE_SCHEDULE_DELETE_OR_DISABLE": "Delete or disable a Schedule.",
+          "ACTION_VAULT_OBJECT_TYPE_SCHEDULE_EDIT": "Edit a Schedule.",
+          "ACTION_VAULT_OBJECT_TYPE_SCHEDULE_VIEW": "View a Schedule.",
+          "ACTION_VAULT_OBJECT_TYPE_SERVICE_ACCOUNT_CREATE": "Create a Service Account.",
+          "ACTION_VAULT_OBJECT_TYPE_SERVICE_ACCOUNT_DELETE_OR_DISABLE": "Delete or disable a Service Account.",
+          "ACTION_VAULT_OBJECT_TYPE_SERVICE_ACCOUNT_EDIT": "Edit a Service Account.",
+          "ACTION_VAULT_OBJECT_TYPE_SERVICE_ACCOUNT_VIEW": "View a Service Account.",
+          "ACTION_VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_CREATE": "Create a Supervisor Contract.",
+          "ACTION_VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_DELETE_OR_DISABLE": "Delete or disable a Supervisor Contract.",
+          "ACTION_VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_EDIT": "Edit a Supervisor Contract.",
+          "ACTION_VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_VERSION_CREATE": "Create a Supervisor Contract Version.",
+          "ACTION_VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_VERSION_DELETE_OR_DISABLE": "Delete or disable a Supervisor Contract Version.",
+          "ACTION_VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_VERSION_EDIT": "Edit a Supervisor Contract Version.",
+          "ACTION_VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_VERSION_VIEW": "View a Supervisor Contract Version.",
+          "ACTION_VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_VIEW": "View a Supervisor Contract.",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_CREATE": "Create a Task.",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_DELETE_OR_DISABLE": "Delete or disable a Task.",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_EDIT": "Edit a Task.",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_THREAD_CREATE": "Create a Task Thread.",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_THREAD_DELETE_OR_DISABLE": "Delete or disable a Task Thread.",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_THREAD_EDIT": "Edit a Task Thread.",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_THREAD_HISTORY_ENTRY_CREATE": "Create a Task Thread History Entry.",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_THREAD_HISTORY_ENTRY_DELETE_OR_DISABLE": "Delete or disable a Task Thread History Entry.",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_THREAD_HISTORY_ENTRY_EDIT": "Edit a Task Thread History Entry.",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_THREAD_HISTORY_ENTRY_VIEW": "View a Task Thread History Entry.",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_THREAD_VIEW": "View a Task Thread.",
+          "ACTION_VAULT_OBJECT_TYPE_TASK_VIEW": "View a Task.",
+          "ACTION_VAULT_OBJECT_TYPE_TICKET_CREATE": "Create a Ticket.",
+          "ACTION_VAULT_OBJECT_TYPE_TICKET_DELETE_OR_DISABLE": "Delete or disable a Ticket.",
+          "ACTION_VAULT_OBJECT_TYPE_TICKET_EDIT": "Edit a Ticket.",
+          "ACTION_VAULT_OBJECT_TYPE_TICKET_VIEW": "View a Ticket.",
+          "ACTION_VAULT_OBJECT_TYPE_TRANSACTION_CREATE": "Create a Transaction.",
+          "ACTION_VAULT_OBJECT_TYPE_TRANSACTION_DELETE_OR_DISABLE": "Delete or disable a Transaction.",
+          "ACTION_VAULT_OBJECT_TYPE_TRANSACTION_EDIT": "Edit a Transaction.",
+          "ACTION_VAULT_OBJECT_TYPE_TRANSACTION_VIEW": "View a Transaction.",
+          "ACTION_VAULT_OBJECT_TYPE_UK_BANK_ACCOUNT_NUMBER_CREATE": "Create a UK Bank Account Number.",
+          "ACTION_VAULT_OBJECT_TYPE_UK_BANK_ACCOUNT_NUMBER_DELETE_OR_DISABLE": "Delete or disable a UK Bank Account Number.",
+          "ACTION_VAULT_OBJECT_TYPE_UK_BANK_ACCOUNT_NUMBER_EDIT": "Edit a UK Bank Account Number.",
+          "ACTION_VAULT_OBJECT_TYPE_UK_BANK_ACCOUNT_NUMBER_VIEW": "View a UK Bank Account Number.",
+          "ACTION_VAULT_OBJECT_TYPE_UNKNOWN": "Unknown type",
+          "ACTION_VAULT_OBJECT_TYPE_UNSOLICITED_MESSAGE_CREATE": "Create an Unsolicited Message.",
+          "ACTION_VAULT_OBJECT_TYPE_UNSOLICITED_MESSAGE_DELETE_OR_DISABLE": "Delete or disable an Unsolicited Message.",
+          "ACTION_VAULT_OBJECT_TYPE_UNSOLICITED_MESSAGE_EDIT": "Edit an Unsolicited Message.",
+          "ACTION_VAULT_OBJECT_TYPE_UNSOLICITED_MESSAGE_VIEW": "View an Unsolicited Message.",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_APPS_NOTE_CREATE": "Create a Vault Apps Note.",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_APPS_NOTE_DELETE_OR_DISABLE": "Delete or disable a Vault Apps Note.",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_APPS_NOTE_EDIT": "Edit a Vault Apps Note.",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_APPS_NOTE_VIEW": "View a Vault Apps Note.",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_APPS_WORKFLOW_INSTANTIATION_LINK_CREATE": "Create a Vault Apps Workflow Instantiation Link.",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_APPS_WORKFLOW_INSTANTIATION_LINK_DELETE_OR_DISABLE": "Delete or disable a Vault Apps Workflow Instantiation Link.",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_APPS_WORKFLOW_INSTANTIATION_LINK_EDIT": "Edit a Vault Apps Workflow Instantiation Link.",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_APPS_WORKFLOW_INSTANTIATION_LINK_VIEW": "View a Vault Apps Workflow Instantiation Link.",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_PERMISSION_CREATE": "Create a Vault Permission.",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_PERMISSION_DELETE_OR_DISABLE": "Delete or disable a Vault Permission.",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_PERMISSION_EDIT": "Edit a Vault Permission.",
+          "ACTION_VAULT_OBJECT_TYPE_VAULT_PERMISSION_VIEW": "View a Vault Permission.",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_CREATE": "Create a Workflow Definition.",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_DELETE_OR_DISABLE": "Delete or disable a Workflow Definition.",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_EDIT": "Edit a Workflow Definition.",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_VERSION_CREATE": "Create a Workflow Definition Version.",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_VERSION_DELETE_OR_DISABLE": "Delete or disable a Workflow Definition Version.",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_VERSION_EDIT": "Edit a Workflow Definition Version.",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_VERSION_VIEW": "View a Workflow Definition Version.",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_VIEW": "View a Workflow Definition.",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_CREATE": "Create a Workflow Instance.",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_DELETE_OR_DISABLE": "Delete or disable a Workflow Instance.",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_EDIT": "Edit a Workflow Instance.",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_EVENT_CREATE": "Create a Workflow Instance Event.",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_EVENT_DELETE_OR_DISABLE": "Delete or disable a Workflow Instance Event.",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_EVENT_EDIT": "Edit a Workflow Instance Event.",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_EVENT_VIEW": "View a Workflow Instance Event.",
+          "ACTION_VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_VIEW": "View a Workflow Instance.",
+          "ACTION_VAULT_OBJECT_TYPE_XPL_TRANSACTION_CREATE": "Create an Experience Layer Transaction.",
+          "ACTION_VAULT_OBJECT_TYPE_XPL_TRANSACTION_DELETE_OR_DISABLE": "Delete or disable an Experience Layer Transaction.",
+          "ACTION_VAULT_OBJECT_TYPE_XPL_TRANSACTION_EDIT": "Edit an Experience Layer Transaction.",
+          "ACTION_VAULT_OBJECT_TYPE_XPL_TRANSACTION_VIEW": "View an Experience Layer Transaction."
+        }
+      },
+      "permissionsBatchGetDataPermissionsResponse": {
+        "type": "object",
+        "properties": {
+          "data_permissions": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/permissionsDataPermission"
+            },
+            "description": "A map of the data permission ID to the data permission."
+          }
+        }
+      },
+      "permissionsBatchGetVaultPermissionsResponse": {
+        "type": "object",
+        "properties": {
+          "vault_permissions": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/permissionsVaultPermission"
+            },
+            "description": "A map of the Vault permission IDs to the Vault permission to be retrieved."
+          }
+        }
+      },
+      "permissionsCreateDataPermissionRequest": {
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "description": "The ID used to ensure this request is idempotent.\n\nRequired."
+          },
+          "data_permission": {
+            "$ref": "#/components/schemas/permissionsDataPermission",
+            "description": "The data permission that is to be created.\n\nRequired."
+          }
+        },
+        "required": [
+          "request_id",
+          "data_permission"
+        ]
+      },
+      "permissionsDataPermission": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the data permission.\n\nRequired."
+          },
+          "display_name": {
+            "type": "string",
+            "description": "The name of the data permission.\n\nRequired.\nMin length: 1 characters."
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the data permission."
+          },
+          "employee_id": {
+            "type": "string",
+            "description": "The ID of the employee who created the permission.",
+            "x-output-only": true
+          },
+          "create_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "DEPRECATED - use `create_timestamp` instead.",
+            "x-output-only": true,
+            "x-release-info": {
+              "noticeVersion": {
+                "major": 3,
+                "minor": 3
+              },
+              "releaseVersion": {
+                "major": 5
+              },
+              "changeType": "REMOVE_FIELD",
+              "description": "Replaced by `create_timestamp`"
+            }
+          },
+          "create_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the data permission was created.",
+            "x-output-only": true
+          }
+        },
+        "required": [
+          "id",
+          "display_name"
+        ]
+      },
+      "permissionsListDataPermissionsRequestOrderBy": {
+        "type": "string",
+        "enum": [
+          "ORDER_BY_NAME_ASC"
+        ],
+        "default": "ORDER_BY_NAME_ASC"
+      },
+      "permissionsListDataPermissionsResponse": {
+        "type": "object",
+        "properties": {
+          "permissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/permissionsDataPermission"
+            },
+            "description": "The list of the data permissions that are to be retrieved."
+          },
+          "previous_page_token": {
+            "type": "string",
+            "description": "The pagination token used to retrieve the previous page of results. If empty, this is the first page of results."
+          },
+          "next_page_token": {
+            "type": "string",
+            "description": "The pagination token used to retrieve the next page of results. If empty, this is last page of results."
+          }
+        }
+      },
+      "permissionsListVaultPermissionsRequestOrderBy": {
+        "type": "string",
+        "enum": [
+          "ORDER_BY_ID_ASC"
+        ],
+        "default": "ORDER_BY_ID_ASC"
+      },
+      "permissionsListVaultPermissionsResponse": {
+        "type": "object",
+        "properties": {
+          "vault_permissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/permissionsVaultPermission"
+            },
+            "description": "A list of the Vault permissions that are retrieved."
+          },
+          "previous_page_token": {
+            "type": "string",
+            "description": "The pagination token used to retrieve the previous page of results. If empty, this is the first page of results."
+          },
+          "next_page_token": {
+            "type": "string",
+            "description": "The pagination token used to retrieve the next page of results. If empty, this is the last page of results."
+          }
+        }
+      },
+      "permissionsUpdateDataPermissionRequest": {
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "description": "The ID used to ensure this request is idempotent.\n\nRequired."
+          },
+          "data_permission": {
+            "$ref": "#/components/schemas/permissionsDataPermission",
+            "description": "The data permission that is to be updated.\n\nRequired."
+          },
+          "update_mask": {
+            "$ref": "#/components/schemas/protobufFieldMask",
+            "description": "The field mask used to indicate which fields in the resource are to be updated.\n\nRequired."
+          }
+        },
+        "required": [
+          "request_id",
+          "data_permission",
+          "update_mask"
+        ]
+      },
+      "permissionsVaultPermission": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the Vault permission.",
+            "x-output-only": true
+          },
+          "display_name": {
+            "type": "string",
+            "description": "The name of the Vault permission.",
+            "x-output-only": true
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the Vault permission.",
+            "x-output-only": true
+          },
+          "action_type": {
+            "$ref": "#/components/schemas/permissionsActionVaultObjectType",
+            "description": "The type of Vault permission.",
+            "x-output-only": true,
+            "x-release-info": {
+              "releaseVersion": {
+                "major": 1,
+                "minor": 12
+              },
+              "changeType": "ADD_FIELD",
+              "description": "This field replaces: type."
+            }
+          }
+        }
+      },
+      "protobufFieldMask": {
+        "type": "object",
+        "properties": {
+          "paths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The set of field mask paths."
+          }
+        },
+        "description": "\"paths\": [\"f.a\", \"f.b.d\"]\n\nHere `f` represents a field in some root message, `a` and `b` fields in the message found in `f`, and `d` a field found in the message in `f.b`.\n\nFields are represented by their JSON field names.\n\n   \"paths\": [\"f.field1\", \"f.field_on_f.some_field_name\"]\n\nField masks are used to specify a subset of fields that should be, or have been, modified by an update operation.\n\nField masks are JSON encoding as a string array.",
+        "title": "FieldMask represents a set of symbolic field paths, for example:"
+      },
+      "ListRolesRequestDisplayNamesPatternMatch": {
+        "type": "object",
+        "properties": {
+          "patterns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "A list of patterns."
+          },
+          "match_type": {
+            "$ref": "#/components/schemas/ListRolesRequestDisplayNamesPatternMatchMatchType"
+          }
+        }
+      },
+      "ListRolesRequestDisplayNamesPatternMatchMatchType": {
+        "type": "string",
+        "enum": [
+          "MATCH_TYPE_UNKNOWN",
+          "MATCH_TYPE_TEXT_EXACT_CASE_SENSITIVE"
+        ],
+        "default": "MATCH_TYPE_UNKNOWN"
+      },
+      "ListRolesRequestExternalReferencesPatternMatch": {
+        "type": "object",
+        "properties": {
+          "patterns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "A list of patterns."
+          },
+          "match_type": {
+            "$ref": "#/components/schemas/ListRolesRequestExternalReferencesPatternMatchMatchType"
+          }
+        }
+      },
+      "ListRolesRequestExternalReferencesPatternMatchMatchType": {
+        "type": "string",
+        "enum": [
+          "MATCH_TYPE_UNKNOWN",
+          "MATCH_TYPE_TEXT_EXACT_CASE_SENSITIVE"
+        ],
+        "default": "MATCH_TYPE_UNKNOWN"
+      },
+      "rolesBatchGetRolesResponse": {
+        "type": "object",
+        "properties": {
+          "roles": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/rolesRole"
+            },
+            "description": "A map of Role IDs to the retrieved roles."
+          }
+        }
+      },
+      "rolesCreateRoleDataPermissionAssocRequest": {
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "description": "The ID used to ensure this request is idempotent.\n\nRequired."
+          },
+          "role_data_permission_assoc": {
+            "$ref": "#/components/schemas/rolesRoleDataPermissionAssoc",
+            "description": "The association that is to be created between a Role and a data permission.\n\nRequired."
+          }
+        },
+        "required": [
+          "request_id",
+          "role_data_permission_assoc"
+        ]
+      },
+      "rolesCreateRoleRequest": {
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "description": "The ID used to ensure this request is idempotent.\n\nRequired."
+          },
+          "role": {
+            "$ref": "#/components/schemas/rolesRole",
+            "description": "The Role that is to be created.\n\nRequired."
+          }
+        },
+        "required": [
+          "request_id",
+          "role"
+        ]
+      },
+      "rolesCreateRoleVaultPermissionAssocRequest": {
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "description": "The ID used to ensure this request is idempotent.\n\nRequired."
+          },
+          "role_vault_permission_assoc": {
+            "$ref": "#/components/schemas/rolesRoleVaultPermissionAssoc",
+            "description": "The association that is to be created between a Role and a Vault permission.\n\nRequired."
+          }
+        },
+        "required": [
+          "request_id",
+          "role_vault_permission_assoc"
+        ]
+      },
+      "rolesListRoleDataPermissionAssocsRequestOrderBy": {
+        "type": "string",
+        "enum": [
+          "ORDER_BY_ROLE_ID_ASC"
+        ],
+        "default": "ORDER_BY_ROLE_ID_ASC"
+      },
+      "rolesListRoleDataPermissionAssocsResponse": {
+        "type": "object",
+        "properties": {
+          "role_data_permission_assocs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/rolesRoleDataPermissionAssoc"
+            },
+            "description": "The list of returned associations between Roles and data permissions."
+          },
+          "previous_page_token": {
+            "type": "string",
+            "description": "The pagination token used to retrieve the previous page of results. If empty, this is the first page of results."
+          },
+          "next_page_token": {
+            "type": "string",
+            "description": "The pagination token used to retrieve the next page of results. If empty, this is the last page of results."
+          }
+        }
+      },
+      "rolesListRoleVaultPermissionAssocsRequestOrderBy": {
+        "type": "string",
+        "enum": [
+          "ORDER_BY_ROLE_ID_ASC"
+        ],
+        "default": "ORDER_BY_ROLE_ID_ASC"
+      },
+      "rolesListRoleVaultPermissionAssocsResponse": {
+        "type": "object",
+        "properties": {
+          "role_vault_permission_assocs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/rolesRoleVaultPermissionAssoc"
+            },
+            "description": "The list of returned Role Vault permission associations."
+          },
+          "previous_page_token": {
+            "type": "string",
+            "description": "The pagination token used to retrieve the previous page of results. If empty, this is the first page of results."
+          },
+          "next_page_token": {
+            "type": "string",
+            "description": "The pagination token used to retrieve the next page of results. If empty, this is the last page of results."
+          }
+        }
+      },
+      "rolesListRolesRequestOrderBy": {
+        "type": "string",
+        "enum": [
+          "ORDER_BY_CREATE_TIMESTAMP_ASC"
+        ],
+        "default": "ORDER_BY_CREATE_TIMESTAMP_ASC"
+      },
+      "rolesListRolesResponse": {
+        "type": "object",
+        "properties": {
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/rolesRole"
+            },
+            "description": "The list of returned roles."
+          },
+          "previous_page_token": {
+            "type": "string",
+            "description": "The pagination token used to retrieve the previous page of results. If empty, this is the first page of results."
+          },
+          "next_page_token": {
+            "type": "string",
+            "description": "The pagination token used to retrieve the next page of results. If empty, this is the last page of results."
+          }
+        }
+      },
+      "rolesRole": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the Role."
+          },
+          "display_name": {
+            "type": "string",
+            "description": "The display name of the Role.\n\nRequired."
+          },
+          "description": {
+            "type": "string",
+            "description": "A human-readable description of the Role."
+          },
+          "external_reference": {
+            "type": "string",
+            "description": "An external reference for the Role which can be used to link to groups in a bank's SAML integration."
+          },
+          "create_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "DEPRECATED - use `create_timestamp` instead.",
+            "x-output-only": true,
+            "x-release-info": {
+              "noticeVersion": {
+                "major": 3,
+                "minor": 3
+              },
+              "releaseVersion": {
+                "major": 5
+              },
+              "changeType": "REMOVE_FIELD",
+              "description": "Replaced by `create_timestamp`"
+            }
+          },
+          "create_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the Role was created.",
+            "x-output-only": true
+          }
+        },
+        "required": [
+          "display_name"
+        ]
+      },
+      "rolesRoleDataPermissionAssoc": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the association between the Role and the data permission.",
+            "x-output-only": true
+          },
+          "role_id": {
+            "type": "string",
+            "description": "The ID of the Role associated with the data permission."
+          },
+          "data_permission_id": {
+            "type": "string",
+            "description": "The ID of the data permission associated with the Role."
+          },
+          "create_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "DEPRECATED - use `create_timestamp` instead.",
+            "x-output-only": true,
+            "x-release-info": {
+              "noticeVersion": {
+                "major": 3,
+                "minor": 3
+              },
+              "releaseVersion": {
+                "major": 5
+              },
+              "changeType": "REMOVE_FIELD",
+              "description": "Replaced by `create_timestamp`"
+            }
+          },
+          "create_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp indicating when this association between the Role and the data permission was created.",
+            "x-output-only": true
+          }
+        }
+      },
+      "rolesRoleVaultPermissionAssoc": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the association between the Role and the Vault permission.",
+            "x-output-only": true
+          },
+          "role_id": {
+            "type": "string",
+            "description": "The ID of the Role associated with the Vault permission."
+          },
+          "vault_permission_id": {
+            "type": "string",
+            "description": "The ID of the Vault permission associated with the Role."
+          },
+          "create_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "DEPRECATED - use `create_timestamp` instead.",
+            "x-output-only": true,
+            "x-release-info": {
+              "noticeVersion": {
+                "major": 3,
+                "minor": 3
+              },
+              "releaseVersion": {
+                "major": 5
+              },
+              "changeType": "REMOVE_FIELD",
+              "description": "Replaced by `create_timestamp`"
+            }
+          },
+          "create_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp indicating when this association between the Role and Vault permission was created.",
+            "x-output-only": true
+          }
+        }
+      },
+      "rolesUpdateRoleRequest": {
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "description": "The ID used to ensure this request is idempotent.\n\nRequired."
+          },
+          "role": {
+            "$ref": "#/components/schemas/rolesRole",
+            "description": "The Role that is to be updated.\n\nRequired."
+          },
+          "update_mask": {
+            "$ref": "#/components/schemas/protobufFieldMask",
+            "description": "The field mask used to indicate which fields in the resource are to be updated.\n\nRequired."
+          }
+        },
+        "required": [
+          "request_id",
+          "role",
+          "update_mask"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Auth-Token"
+      }
+    },
+    "requestBodies": {
+      "permissionsCreateDataPermissionRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/permissionsCreateDataPermissionRequest"
+            }
+          }
+        }
+      },
+      "permissionsUpdateDataPermissionRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/permissionsUpdateDataPermissionRequest"
+            }
+          }
+        }
+      },
+      "rolesCreateRoleDataPermissionAssocRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/rolesCreateRoleDataPermissionAssocRequest"
+            }
+          }
+        }
+      },
+      "rolesCreateRoleVaultPermissionAssocRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/rolesCreateRoleVaultPermissionAssocRequest"
+            }
+          }
+        }
+      },
+      "rolesCreateRoleRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/rolesCreateRoleRequest"
+            }
+          }
+        }
+      },
+      "rolesUpdateRoleRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/rolesUpdateRoleRequest"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}

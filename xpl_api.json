@@ -1,0 +1,1307 @@
+{
+  "info": {
+    "title": "Xpl Api",
+    "version": "v1"
+  },
+  "paths": {
+    "/v1/payees": {
+      "get": {
+        "summary": "Returns a paginated list of payees based on the provided filter criteria.",
+        "description": "Returns a paginated list of payees based on the provided filter criteria. All requests to this endpoint must include the `created_by_customer_id` field (or the deprecated alternative `customer_id`), the `account_ids` field, or both.",
+        "operationId": "ListPayees",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/payeesListPayeesResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "Each payee includes a `created_by_customer_id` field. This filter parameter specifies which customer to return payees for.\n",
+            "name": "customer_id",
+            "in": "query",
+            "required": false,
+            "x-release-info": {
+              "noticeVersion": {
+                "major": 2
+              },
+              "releaseVersion": {
+                "major": 5
+              },
+              "changeType": "REMOVE_FIELD",
+              "description": "This field is replaced by created_by_customer_id"
+            },
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The number of payees to be returned.\n\nRequired.\nMin value: 1.\nMax value: 100.",
+            "name": "page_size",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "description": "A page token that specifies which page of payees to return. This value must correspond to a `next_page_token` or `previous_page_token` returned by the API from a previous request.\n",
+            "name": "page_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Each payee is linked to one account. This filter parameter specifies which account(s) to return payees for.",
+            "name": "account_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "This can be set to true to include deleted payees in addition to active payees. Defaults to false.",
+            "name": "include_deleted",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Each payee includes a `created_by_customer_id` field. This filter parameter specifies which customer to return payees for.",
+            "name": "created_by_customer_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "XplAPIPayees"
+        ],
+        "x-section": "Payees",
+        "x-release-info": {
+          "noticeVersion": {
+            "major": 4,
+            "minor": 6
+          },
+          "releaseVersion": {
+            "major": 6
+          },
+          "changeType": "REMOVE_METHOD",
+          "description": "Experience Layer Payees is deprecated."
+        },
+        "x-permission-scopes": [
+          "xpl:read",
+          "xpl.payees:read"
+        ]
+      },
+      "post": {
+        "summary": "Creates a new payee for the specified customer.",
+        "operationId": "CreatePayee",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/payeesPayee"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "XplAPIPayees"
+        ],
+        "x-section": "Payees",
+        "x-release-info": {
+          "noticeVersion": {
+            "major": 4,
+            "minor": 6
+          },
+          "releaseVersion": {
+            "major": 6
+          },
+          "changeType": "REMOVE_METHOD",
+          "description": "Experience Layer Payees is deprecated."
+        },
+        "x-permission-scopes": [
+          "xpl:write",
+          "xpl.payees:write"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/payeesCreatePayeeRequest"
+        }
+      }
+    },
+    "/v1/payees/{id}": {
+      "delete": {
+        "summary": "Deletes a payee by setting the value of the `deleted` field on the specified payee to `true`. This method returns a success response even if the payee is already deleted. This is for idempotence; it is safe to re-send the same request multiple times because you will always receive a success response, rather than a success response on the first call and failure responses on subsequent calls. Calling this method is functionally equivalent to calling `UpdatePayee` and setting the `deleted` field to true.",
+        "operationId": "DeletePayee",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The ID of the payee to delete.",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "XplAPIPayees"
+        ],
+        "x-section": "Payees",
+        "x-release-info": {
+          "noticeVersion": {
+            "major": 4,
+            "minor": 6
+          },
+          "releaseVersion": {
+            "major": 6
+          },
+          "changeType": "REMOVE_METHOD",
+          "description": "Experience Layer Payees is deprecated."
+        },
+        "x-permission-scopes": [
+          "xpl:write",
+          "xpl.payees:write"
+        ]
+      }
+    },
+    "/v1/payees/{payee.id}": {
+      "put": {
+        "summary": "Updates any or all of the mutable payee fields.",
+        "operationId": "UpdatePayee",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/payeesPayee"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The unique ID of the payee.",
+            "name": "payee.id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "XplAPIPayees"
+        ],
+        "x-section": "Payees",
+        "x-release-info": {
+          "noticeVersion": {
+            "major": 4,
+            "minor": 6
+          },
+          "releaseVersion": {
+            "major": 6
+          },
+          "changeType": "REMOVE_METHOD",
+          "description": "Experience Layer Payees is deprecated."
+        },
+        "x-permission-scopes": [
+          "xpl:write",
+          "xpl.payees:write"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/payeesUpdatePayeeRequest"
+        }
+      }
+    },
+    "/v1/payees:batchGet": {
+      "get": {
+        "summary": "Returns the specified payees. Every ID in the request must refer to a payee that exists, or an error will be returned.",
+        "operationId": "BatchGetPayees",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/payeesBatchGetPayeesResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The IDs of the payees to return. Min: 1. Max: 100.",
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "XplAPIPayees"
+        ],
+        "x-section": "Payees",
+        "x-release-info": {
+          "noticeVersion": {
+            "major": 4,
+            "minor": 6
+          },
+          "releaseVersion": {
+            "major": 6
+          },
+          "changeType": "REMOVE_METHOD",
+          "description": "Experience Layer Payees is deprecated."
+        },
+        "x-permission-scopes": [
+          "xpl:read",
+          "xpl.payees:read"
+        ]
+      }
+    },
+    "/v1/transactions": {
+      "get": {
+        "summary": "Returns a paged list of transaction resources. You must provide at least one of the available filter criteria to filter transactions. Filters are additive, for example if you provide both `account_ids` and `payment_ids` then transactions will be returned that match both criteria. Transactions will be ordered by `last_update_timestamp`, descending.",
+        "operationId": "ListTransactions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/transactionsListTransactionsResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The Vault account IDs that are used to filter the transaction list. Max: 100.",
+            "name": "account_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "The payment IDs that are used to filter the transaction list. Max: 100.",
+            "name": "payment_order_ids",
+            "in": "query",
+            "required": false,
+            "x-release-info": {
+              "noticeVersion": {
+                "major": 2,
+                "minor": 7
+              },
+              "releaseVersion": {
+                "major": 4
+              },
+              "changeType": "REMOVE_FIELD",
+              "description": "This field is replaced by payment_ids"
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "The payment IDs that are used to filter the transaction list. Max: 100.",
+            "name": "payment_ids",
+            "in": "query",
+            "required": false,
+            "x-release-info": {
+              "releaseVersion": {
+                "major": 2,
+                "minor": 7
+              },
+              "changeType": "ADD_FIELD"
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "The standing order IDs that are used to filter the transaction list. Max: 50.",
+            "name": "standing_order_ids",
+            "in": "query",
+            "required": false,
+            "x-release-info": {
+              "releaseVersion": {
+                "major": 2,
+                "minor": 2
+              },
+              "changeType": "ADD_FIELD"
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "The Direct Debit IDs that are used to filter the transaction list. Max: 50.",
+            "name": "direct_debit_ids",
+            "in": "query",
+            "required": false,
+            "x-release-info": {
+              "releaseVersion": {
+                "major": 2,
+                "minor": 4
+              },
+              "changeType": "ADD_FIELD"
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "The number of transactions that are to be included in the response.\n\nRequired.\nMin value: 1.\nMax value: 100.",
+            "name": "page_size",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "description": "A page token that specifies which page of payees to return. This value must correspond to a `next_page_token` or `previous_page_token` returned by the API from a previous request.",
+            "name": "page_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "XPLApiTransactions"
+        ],
+        "x-section": "Transactions",
+        "x-release-info": {
+          "releaseVersion": {
+            "major": 1,
+            "minor": 4
+          },
+          "changeType": "ADD_METHOD"
+        },
+        "x-permission-scopes": [
+          "xpl:read",
+          "xpl.transactions:read"
+        ]
+      },
+      "post": {
+        "summary": "Creates a new transaction.",
+        "operationId": "CreateTransaction",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/transactionsTransaction"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "XPLApiTransactions"
+        ],
+        "x-section": "Transactions",
+        "x-release-info": {
+          "releaseVersion": {
+            "major": 1,
+            "minor": 4
+          },
+          "changeType": "ADD_METHOD"
+        },
+        "x-permission-scopes": [
+          "xpl:write",
+          "xpl.transactions:write"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/transactionsCreateTransactionRequest"
+        }
+      }
+    },
+    "/v1/transactions/{transaction.id}": {
+      "put": {
+        "summary": "Updates an existing transaction.",
+        "operationId": "UpdateTransaction",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/transactionsTransaction"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "Unique identifier for this transaction. If not provided on transaction creation, a UUID will be generated. Optional on create, required on update.",
+            "name": "transaction.id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "XPLApiTransactions"
+        ],
+        "x-section": "Transactions",
+        "x-release-info": {
+          "releaseVersion": {
+            "major": 1,
+            "minor": 4
+          },
+          "changeType": "ADD_METHOD"
+        },
+        "x-permission-scopes": [
+          "xpl:write",
+          "xpl.transactions:write"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/transactionsUpdateTransactionRequest"
+        }
+      }
+    },
+    "/v1/transactions:batchGet": {
+      "get": {
+        "summary": "Given a list of transaction IDs, returns a map of transaction ID to transaction resource. Returns an error if any of the IDs in the requests don't exist.",
+        "operationId": "BatchGetTransactions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/transactionsBatchGetTransactionsResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The IDs of the transactions that are to be retrieved. Min: 1. Max: 100.",
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "XPLApiTransactions"
+        ],
+        "x-section": "Transactions",
+        "x-release-info": {
+          "releaseVersion": {
+            "major": 1,
+            "minor": 4
+          },
+          "changeType": "ADD_METHOD"
+        },
+        "x-permission-scopes": [
+          "xpl:read",
+          "xpl.transactions:read"
+        ]
+      }
+    }
+  },
+  "x-sections": {
+    "Payees": {
+      "releaseNotes": {
+        "noticeVersion": {
+          "major": 4,
+          "minor": 6
+        },
+        "releaseVersion": {
+          "major": 6
+        },
+        "changeType": "REMOVE_SERVICE",
+        "description": "Experience Layer Payees is deprecated."
+      }
+    },
+    "Transactions": {}
+  },
+  "openapi": "3.0.1",
+  "components": {
+    "schemas": {
+      "payeesBatchGetPayeesResponse": {
+        "type": "object",
+        "properties": {
+          "payees": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/payeesPayee"
+            },
+            "description": "A map of ID to payee. There will be one entry in this map for every requested payee ID."
+          }
+        }
+      },
+      "payeesCreatePayeeRequest": {
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "description": "A unique string ID used to ensure this request is idempotent.\n\nRequired."
+          },
+          "payee": {
+            "$ref": "#/components/schemas/payeesPayee",
+            "description": "The payee to be created.\n\nRequired.",
+            "x-excluded-fields": [
+              "id",
+              "deleted",
+              "create_timestamp",
+              "last_update_timestamp",
+              "migration_info"
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "payee"
+        ]
+      },
+      "payeesListPayeesResponse": {
+        "type": "object",
+        "properties": {
+          "payees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/payeesPayee"
+            },
+            "description": "The result set for the request."
+          },
+          "next_page_token": {
+            "type": "string",
+            "description": "If the result set contains more results than the requested `page_size`, this token identifies the next page of results. This value can be provided in the `page_token` parameter of a subsequent request to return the next page of results."
+          },
+          "previous_page_token": {
+            "type": "string",
+            "description": "If a `page_token` was provided on the request and the requested page is not the first page, this token identifies the preceding page. This value can be provided in the `page_token` parameter of a subsequent request to return the previous page of results."
+          }
+        }
+      },
+      "payeesMigrationInfo": {
+        "type": "object",
+        "properties": {
+          "is_migrated": {
+            "type": "boolean",
+            "description": "This field indicates whether the payee has been migrated from another platform into Vault."
+          },
+          "tranche_id": {
+            "type": "string",
+            "description": "The ID of the tranche that the payee was migrated within."
+          },
+          "migration_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The time at which the payee was migrated."
+          },
+          "source_resource_id": {
+            "type": "string",
+            "description": "The ID from the source platform of the migrated payee."
+          }
+        }
+      },
+      "payeesPayee": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique ID of the payee."
+          },
+          "created_by_customer_id": {
+            "type": "string",
+            "description": "The ID of the customer who created or is creating this payee."
+          },
+          "account_id": {
+            "type": "string",
+            "description": "The ID of the account associated with this payee. Note that the account may have multiple stakeholders, in which case the `created_by_customer_id` field will tell you which of the stakeholders created the payee. This field is required on CreatePayee."
+          },
+          "payee_label": {
+            "type": "string",
+            "description": "The display label for this payee. This field is required on CreatePayee."
+          },
+          "deleted": {
+            "type": "boolean",
+            "description": "Set to `true` if the payee has been marked as deleted, otherwise `false`. Deleted payees will only appear in a `ListPayeesResponse` if the `include_deleted` parameter was set to true on the `ListPayeesRequest`. Deleted payees are always included in a `BatchGetPayeesResponse`."
+          },
+          "create_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "A UTC timestamp recording when the payee was created."
+          },
+          "default_payment_reference": {
+            "type": "string",
+            "description": "The reference for this payment. Allowed characters are: * alphanumeric (A-Z, a-z, 0-9) * / - ? : ( ) . , ' + # = ! \" % & * < > ; { @ * space If a default payment reference is not provided then a payment reference is always required when submitting a payment to this payee.\n\nMax length: 18 characters."
+          },
+          "last_update_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "A UTC timestamp recording when the payee was last updated. If the payee has never been updated, this field will contain the same value as `create_timestamp`."
+          },
+          "migration_info": {
+            "$ref": "#/components/schemas/payeesMigrationInfo",
+            "description": "Stores migration-specific information.",
+            "x-release-info": {
+              "releaseVersion": {
+                "major": 2,
+                "minor": 5
+              },
+              "changeType": "ADD_FIELD"
+            }
+          },
+          "uk_bank_identifier": {
+            "$ref": "#/components/schemas/payeesUKBankIdentifier",
+            "required": true
+          }
+        },
+        "description": "Object that represents a payee."
+      },
+      "payeesUKBankIdentifier": {
+        "type": "object",
+        "properties": {
+          "beneficiary_name": {
+            "type": "string",
+            "description": "The full name of the beneficiary account holder.\n\nRequired.\nMax length: 64 characters."
+          },
+          "account_number": {
+            "type": "string",
+            "description": "The account number of the beneficiary account.\nThis field must contain a UK bank account number of between 6 and 10 digits, e.g. 12345678.\nRequired."
+          },
+          "sort_code": {
+            "type": "string",
+            "description": "The sort code of the bank that holds the beneficiary account.\nThis field must contain a UK sort code in a strictly numeric string of 6 digits, e.g. 123456.\nRequired."
+          }
+        },
+        "description": "Routing information for the payee's UK bank account.",
+        "required": [
+          "beneficiary_name",
+          "account_number",
+          "sort_code"
+        ]
+      },
+      "payeesUpdatePayeeRequest": {
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "description": "A unique string ID used to ensure this request is idempotent.\n\nRequired."
+          },
+          "payee": {
+            "$ref": "#/components/schemas/payeesPayee",
+            "description": "The payee resource that is to be mutated. Can be partial. Must include the payee ID. Any field referenced in the update mask must be present.\n\nRequired.",
+            "x-excluded-fields": [
+              "id",
+              "created_by_customer_id",
+              "account_id",
+              "routing_info",
+              "deleted",
+              "create_timestamp",
+              "last_update_timestamp",
+              "migration_info"
+            ]
+          },
+          "update_mask": {
+            "$ref": "#/components/schemas/protobufFieldMask",
+            "description": "- **payee_label**<br/> - **default_payment_reference**<br/> - **deleted**\n\nUsing this method to set the `deleted` field to true is functionally equivalent to calling `DeletePayee`.\n\nRequired.",
+            "title": "Field mask for this update. Fields not included in this mask will be ignored. The accepted values are:"
+          }
+        },
+        "required": [
+          "request_id",
+          "payee",
+          "update_mask"
+        ]
+      },
+      "protobufFieldMask": {
+        "type": "object",
+        "properties": {
+          "paths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The set of field mask paths."
+          }
+        },
+        "description": "\"paths\": [\"f.a\", \"f.b.d\"]\n\nHere `f` represents a field in some root message, `a` and `b` fields in the message found in `f`, and `d` a field found in the message in `f.b`.\n\nFields are represented by their JSON field names.\n\n   \"paths\": [\"f.field1\", \"f.field_on_f.some_field_name\"]\n\nField masks are used to specify a subset of fields that should be, or have been, modified by an update operation.\n\nField masks are JSON encoding as a string array.",
+        "title": "FieldMask represents a set of symbolic field paths, for example:"
+      },
+      "commonAmount": {
+        "type": "object",
+        "properties": {
+          "asset": {
+            "$ref": "#/components/schemas/commonAsset",
+            "description": "The asset type of the denomination. Mandatory."
+          },
+          "value": {
+            "type": "string",
+            "description": "The value of the amount, unsigned number with optional floating point and arbitrary precision. Valid examples: <100>, <0.1>, <5.99>, <0.23422>. Mandatory."
+          },
+          "denomination": {
+            "type": "string",
+            "description": "The denomination of the amount, e.g. GBP, EUR. Mandatory."
+          }
+        },
+        "title": "Represents the amount of a transaction or payment For a USD1000 payment, the amount will be:    {        asset: Asset.CASH,        value: \"1000\",        denomination: \"USD\",    }"
+      },
+      "commonAsset": {
+        "type": "string",
+        "enum": [
+          "UNKNOWN",
+          "CASH"
+        ],
+        "default": "UNKNOWN"
+      },
+      "protobufListValue": {
+        "type": "object",
+        "properties": {
+          "values": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/protobufValue"
+            },
+            "description": "Repeated field of dynamically typed values."
+          }
+        },
+        "description": "`ListValue` is a wrapper around a repeated field of values.\n\nThe JSON representation for `ListValue` is JSON array."
+      },
+      "protobufNullValue": {
+        "type": "string",
+        "enum": [
+          "NULL_VALUE"
+        ],
+        "default": "NULL_VALUE",
+        "description": "`NullValue` is a singleton enumeration to represent the null value for the `Value` type union.\n\n The JSON representation for `NullValue` is JSON `null`.",
+        "x-enum-value-descriptions": {
+          "NULL_VALUE": "Null value."
+        }
+      },
+      "protobufStruct": {
+        "type": "object",
+        "properties": {
+          "fields": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/protobufValue"
+            },
+            "description": "Unordered map of dynamically typed values."
+          }
+        },
+        "description": "`Struct` represents a structured data value, consisting of fields which map to dynamically typed values. In some languages, `Struct` might be supported by a native representation. For example, in scripting languages like JS a struct is represented as an object. The details of that representation are described together with the proto support for the language.\n\nThe JSON representation for `Struct` is JSON object."
+      },
+      "protobufValue": {
+        "type": "object",
+        "properties": {
+          "null_value": {
+            "$ref": "#/components/schemas/protobufNullValue",
+            "required": false
+          },
+          "number_value": {
+            "$ref": "#/components/schemas/number_value",
+            "required": false
+          },
+          "string_value": {
+            "$ref": "#/components/schemas/string_value",
+            "required": false
+          },
+          "bool_value": {
+            "$ref": "#/components/schemas/bool_value",
+            "required": false
+          },
+          "struct_value": {
+            "$ref": "#/components/schemas/protobufStruct",
+            "required": false
+          },
+          "list_value": {
+            "$ref": "#/components/schemas/protobufListValue",
+            "required": false
+          }
+        },
+        "description": "`Value` represents a dynamically typed value which can be either null, a number, a string, a boolean, a recursive struct value, or a list of values. A producer of value is expected to set one of that variants, absence of any variant indicates an error.\n\nThe JSON representation for `Value` is JSON value."
+      },
+      "transactionsBatchGetTransactionsResponse": {
+        "type": "object",
+        "properties": {
+          "transactions": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/transactionsTransaction"
+            },
+            "description": "Map of Transaction ID to transaction resource. All requested IDs will be populated on a successful request."
+          }
+        }
+      },
+      "transactionsCreateTransactionRequest": {
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "description": "Uniquely identifies this request. Used to enforce idempotent mutations.\n\nRequired."
+          },
+          "transaction": {
+            "$ref": "#/components/schemas/transactionsTransaction",
+            "description": "The transaction resource that is to be created."
+          }
+        },
+        "required": [
+          "request_id"
+        ]
+      },
+      "transactionsDirectDebit": {
+        "type": "object",
+        "properties": {
+          "direct_debit_id": {
+            "type": "string",
+            "description": "The ID of the Direct Debit resource that generated the transaction. Max length: 1024 characters."
+          },
+          "mandate_id": {
+            "type": "string",
+            "description": "The ID of the Mandate this Direct Debit belongs to. Optional. Max length: 1024 characters."
+          },
+          "mandate_reference": {
+            "type": "string",
+            "description": "The reference of the Mandate. This field is used during scheme validation to match an `INBOUND` Direct Debit with the existing active Mandate. Optional. Max length: 1024 characters."
+          }
+        }
+      },
+      "transactionsListTransactionsResponse": {
+        "type": "object",
+        "properties": {
+          "transactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/transactionsTransaction"
+            },
+            "description": "The result set for the request."
+          },
+          "previous_page_token": {
+            "type": "string",
+            "description": "If a `page_token` was provided on the request and the requested page is not the first page, this token identifies the preceding page. This value can be provided in the `page_token` parameter of a subsequent request to return the previous page of results."
+          },
+          "next_page_token": {
+            "type": "string",
+            "description": "If the result set contains more results than the requested `page_size`, this token identifies the next page of results. This value can be provided in the `page_token` parameter of a subsequent request to return the next page of results."
+          }
+        }
+      },
+      "transactionsRejectionCode": {
+        "type": "string",
+        "enum": [
+          "REJECTION_CODE_UNKNOWN",
+          "REJECTION_CODE_INSUFFICIENT_FUNDS",
+          "REJECTION_CODE_CREDITOR",
+          "REJECTION_CODE_DEBITOR",
+          "REJECTION_CODE_INVALID_DENOMINATION",
+          "REJECTION_CODE_INVALID_AMOUNT",
+          "REJECTION_CODE_EXTERNAL"
+        ],
+        "default": "REJECTION_CODE_UNKNOWN",
+        "x-enum-value-descriptions": {
+          "REJECTION_CODE_CREDITOR": "The transaction was rejected on the creditor side.",
+          "REJECTION_CODE_DEBITOR": "The transaction was rejected on the debitor side.",
+          "REJECTION_CODE_EXTERNAL": "The transaction was rejected because of an issue external to Vault.",
+          "REJECTION_CODE_INSUFFICIENT_FUNDS": "The contract rejected this transaction because the debitor account had insufficient funds.",
+          "REJECTION_CODE_INVALID_AMOUNT": "The payment has an invalid amount for the given currency/payment scheme.",
+          "REJECTION_CODE_INVALID_DENOMINATION": "The posting instruction target account does not support the posted denomination.",
+          "REJECTION_CODE_UNKNOWN": "Unknown rejection reason. This should also be used if the transaction was rejected for a reason not included in this enum."
+        }
+      },
+      "transactionsStandingOrder": {
+        "type": "object",
+        "properties": {
+          "standing_order_id": {
+            "type": "string",
+            "description": "The ID of the standing order instruction that generated the transaction. Max length: 100 characters."
+          },
+          "payment_id": {
+            "type": "string",
+            "description": "The ID of the payment that generated the transaction. Max length: 36 characters.",
+            "x-release-info": {
+              "noticeVersion": {
+                "major": 3
+              },
+              "releaseVersion": {
+                "major": 5
+              },
+              "changeType": "REMOVE_FIELD",
+              "description": "This field is replaced by the payment_id field on the parent transaction"
+            }
+          }
+        }
+      },
+      "transactionsTransaction": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for this transaction. If not provided on transaction creation, a UUID will be generated. Optional on create, required on update.\nThis field must contain a valid UUID in the canonical 8-4-4-4-12 form."
+          },
+          "account_id": {
+            "type": "string",
+            "description": "The Vault account ID this transaction applies to. Required on create, ignored on update.",
+            "x-create-only": true
+          },
+          "amount": {
+            "$ref": "#/components/schemas/commonAmount",
+            "description": "The amount of the transaction. Required on create, optional on update.",
+            "x-create-only": true,
+            "x-example-override": "{\"asset\": \"CASH\", \"value\": 10, \"denomination\": \"GBP\"}"
+          },
+          "is_credit": {
+            "type": "boolean",
+            "description": "Whether the transaction is a credit or debit from the point of view of the account referenced by `account_id`. Defaults to false on create, ignored on update.",
+            "x-create-only": true
+          },
+          "reference": {
+            "type": "string",
+            "description": "The reference for this transaction. Optional.\n\nMax length: 255 characters."
+          },
+          "status": {
+            "$ref": "#/components/schemas/transactionsTransactionStatus",
+            "description": "The transaction status. Required on create, optional on update."
+          },
+          "value_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "A UTC timestamp that records when the assets become available to the account owner for a credit or cease to be available to the account owner for a debit. If this field is populated and the transaction is in a pending state, it refers to an expected/requested value date. Optional."
+          },
+          "booking_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "A UTC timestamp that records when a transaction becomes final. If this field is populated and the transaction is in a pending state, it refers to an expected booking date. Optional."
+          },
+          "payee_id": {
+            "type": "string",
+            "description": "If applicable, ID of a payee associated with this transaction in the Experience Layer. Optional.\n"
+          },
+          "payment_order_id": {
+            "type": "string",
+            "description": "If applicable, ID of the payment that generated this transaction. Optional.\n\n_Note: this field is deprecated in favour of `payment_id` and will be removed in version 4.0. If both `payment_id` and `payment_order_id` are provided on a `CreateTransaction` or `UpdateTransaction` call, the value of `payment_id` takes precedence._\nThis field must contain a valid UUID in the canonical 8-4-4-4-12 form.",
+            "x-release-info": {
+              "noticeVersion": {
+                "major": 2,
+                "minor": 7
+              },
+              "releaseVersion": {
+                "major": 4
+              },
+              "changeType": "REMOVE_FIELD",
+              "description": "This field is replaced by payment_id"
+            }
+          },
+          "payment_id": {
+            "type": "string",
+            "description": "If applicable, ID of the payment that generated this transaction. Optional.\nThis field must contain a valid UUID in the canonical 8-4-4-4-12 form.",
+            "x-release-info": {
+              "releaseVersion": {
+                "major": 2,
+                "minor": 7
+              },
+              "changeType": "ADD_FIELD"
+            }
+          },
+          "posting_instruction_batch_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Ordered list of posting instruction batch IDs. Ordered by posting batch value_timestamp, ascending. Can be supplied in any order, will be returned ordered. Once a batch ID has been linked to a transaction, it cannot be unlinked. Updates may only add new IDs to this collection. Can be empty (e.g. cancelled transaction, pre-auth creation). Optional."
+          },
+          "last_update_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "UTC timestamp recording when the transaction was last updated. If the transaction has never been updated, this field will represent the time the transaction resource was created.",
+            "x-output-only": true
+          },
+          "rejection_code": {
+            "$ref": "#/components/schemas/transactionsRejectionCode",
+            "description": "If a transaction has status rejected, this code represents the reason for being rejected.",
+            "x-release-info": {
+              "releaseVersion": {
+                "major": 1,
+                "minor": 5
+              },
+              "changeType": "ADD_FIELD"
+            }
+          },
+          "transaction_code": {
+            "$ref": "#/components/schemas/transactionsTransactionCode",
+            "description": "The ISO20022 Bank Transaction Code object. This contains the set of elements fully identifying the type of underlying transaction that results in an entry.\n",
+            "x-release-info": {
+              "releaseVersion": {
+                "major": 2,
+                "minor": 1
+              },
+              "changeType": "ADD_FIELD"
+            }
+          },
+          "transaction_source": {
+            "$ref": "#/components/schemas/transactionsTransactionSource",
+            "description": "The source of the transaction.",
+            "x-create-only": true,
+            "x-release-info": {
+              "releaseVersion": {
+                "major": 2,
+                "minor": 2
+              },
+              "changeType": "ADD_FIELD"
+            }
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/protobufStruct",
+            "description": "Represents Transaction specific metadata in the form of a JSON object. No validations are performed on this field. Optional.",
+            "x-create-only": true,
+            "x-third-party": "GOOGLE_PROTOBUF_STRUCT",
+            "x-example-override": "{\"statement_id\": 123456}"
+          },
+          "standing_order": {
+            "$ref": "#/components/schemas/transactionsStandingOrder",
+            "required": false
+          },
+          "direct_debit": {
+            "$ref": "#/components/schemas/transactionsDirectDebit",
+            "required": false
+          }
+        }
+      },
+      "transactionsTransactionCode": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Specifies the business area of the underlying transaction."
+          },
+          "family": {
+            "type": "string",
+            "description": "Specifies the family within a domain."
+          },
+          "subfamily": {
+            "type": "string",
+            "description": "Specifies the subproduct family within a specific family."
+          }
+        }
+      },
+      "transactionsTransactionSource": {
+        "type": "string",
+        "enum": [
+          "TRANSACTION_SOURCE_UNKNOWN",
+          "TRANSACTION_SOURCE_STANDING_ORDER",
+          "TRANSACTION_SOURCE_CONTRACT",
+          "TRANSACTION_SOURCE_DIRECT_DEBIT"
+        ],
+        "default": "TRANSACTION_SOURCE_UNKNOWN",
+        "x-enum-value-release-info": {
+          "TRANSACTION_SOURCE_CONTRACT": {
+            "releaseVersion": {
+              "major": 2,
+              "minor": 2
+            },
+            "changeType": "ADD_ENUM_VALUE"
+          },
+          "TRANSACTION_SOURCE_DIRECT_DEBIT": {
+            "releaseVersion": {
+              "major": 2,
+              "minor": 4
+            },
+            "changeType": "ADD_ENUM_VALUE"
+          },
+          "TRANSACTION_SOURCE_STANDING_ORDER": {
+            "releaseVersion": {
+              "major": 2,
+              "minor": 2
+            },
+            "changeType": "ADD_ENUM_VALUE"
+          },
+          "TRANSACTION_SOURCE_UNKNOWN": {
+            "releaseVersion": {
+              "major": 2,
+              "minor": 2
+            },
+            "changeType": "ADD_ENUM_VALUE"
+          }
+        },
+        "x-enum-value-descriptions": {
+          "TRANSACTION_SOURCE_CONTRACT": "The source of the transaction is a Smart Contract-initiated posting instruction.",
+          "TRANSACTION_SOURCE_DIRECT_DEBIT": "The source of the transaction is a Direct Debit.",
+          "TRANSACTION_SOURCE_STANDING_ORDER": "The source of the transaction is a standing order execution.",
+          "TRANSACTION_SOURCE_UNKNOWN": "The source of the transaction has not been set."
+        }
+      },
+      "transactionsTransactionStatus": {
+        "type": "string",
+        "enum": [
+          "TRANSACTION_STATUS_UNKNOWN",
+          "TRANSACTION_STATUS_PENDING",
+          "TRANSACTION_STATUS_BOOKED",
+          "TRANSACTION_STATUS_REJECTED"
+        ],
+        "default": "TRANSACTION_STATUS_UNKNOWN",
+        "x-enum-value-descriptions": {
+          "TRANSACTION_STATUS_BOOKED": "Final success status.",
+          "TRANSACTION_STATUS_PENDING": "Pending transaction.",
+          "TRANSACTION_STATUS_REJECTED": "Error status for a transaction.",
+          "TRANSACTION_STATUS_UNKNOWN": "Unknown transaction status."
+        }
+      },
+      "transactionsUpdateTransactionRequest": {
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "description": "Uniquely identifies this request. Used to enforce idempotent mutations.\n\nRequired."
+          },
+          "transaction": {
+            "$ref": "#/components/schemas/transactionsTransaction",
+            "description": "The transaction resource that is to be mutated. Can be partial. Must include the transaction ID. Any field referenced in the update mask must be present."
+          },
+          "update_mask": {
+            "$ref": "#/components/schemas/protobufFieldMask",
+            "description": "- **amount.value**<br/> - **reference**<br/> - **status**<br/> - **value_timestamp**<br/> - **booking_timestamp**<br/> - **payee_id**<br/> - **payment_id**<br/> - **payment_order_id**<br/> - **posting_instruction_batch_ids**<br/> - **rejection_code**<br/> - **transaction_code.domain**<br/> - **transaction_code.family**<br/> - **transaction_code.subfamily**\n\nRequired.",
+            "title": "Field mask for this update. Fields not included in this mask will be ignored. The accepted values are:"
+          }
+        },
+        "required": [
+          "request_id",
+          "update_mask"
+        ]
+      },
+      "number_value": {
+        "type": "string",
+        "description": "Represents a double value."
+      },
+      "string_value": {
+        "type": "string",
+        "description": "Represents a string value."
+      },
+      "bool_value": {
+        "type": "string",
+        "description": "Represents a boolean value."
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Auth-Token"
+      }
+    },
+    "requestBodies": {
+      "payeesCreatePayeeRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/payeesCreatePayeeRequest"
+            }
+          }
+        }
+      },
+      "payeesUpdatePayeeRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/payeesUpdatePayeeRequest"
+            }
+          }
+        }
+      },
+      "transactionsCreateTransactionRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/transactionsCreateTransactionRequest"
+            }
+          }
+        }
+      },
+      "transactionsUpdateTransactionRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/transactionsUpdateTransactionRequest"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}

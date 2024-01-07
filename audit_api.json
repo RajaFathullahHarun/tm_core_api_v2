@@ -1,0 +1,1472 @@
+{
+  "info": {
+    "title": "Audit Api",
+    "version": "v1"
+  },
+  "paths": {
+    "/v1/action-logs": {
+      "get": {
+        "summary": "A list of all available Action Logs that have been recorded. Results are ordered by descending `create_timestamp`.",
+        "operationId": "ListActionLogs",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/action_logsListActionLogsResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The IDs of customers on whose behalf the action occurred. Optional.",
+            "name": "on_behalf_of_customer_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "The IDs of employees on whose behalf the action occurred. Optional.",
+            "name": "on_behalf_of_employee_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "The types of Vault objects that actions were performed on. Optional.",
+            "name": "vault_object_types",
+            "in": "query",
+            "required": false,
+            "x-enum-value-release-info": {
+              "VAULT_OBJECT_TYPE_ACCOUNT_CONFIG_ENTITY": {
+                "changeType": "ADD_ENUM_VALUE",
+                "featureFlag": "CPP_785_CONFIGURATION_HIERARCHY"
+              },
+              "VAULT_OBJECT_TYPE_ACCOUNT_CONFIG_ENTITY_ASSOC": {
+                "changeType": "ADD_ENUM_VALUE",
+                "featureFlag": "CPP_785_CONFIGURATION_HIERARCHY"
+              },
+              "VAULT_OBJECT_TYPE_ACCOUNT_CONFIG_GROUP": {
+                "changeType": "ADD_ENUM_VALUE",
+                "featureFlag": "CPP_785_CONFIGURATION_HIERARCHY"
+              },
+              "VAULT_OBJECT_TYPE_ENTITY": {
+                "changeType": "ADD_ENUM_VALUE",
+                "featureFlag": "TMV_685_MULTI_ENTITY_MVP"
+              },
+              "VAULT_OBJECT_TYPE_PARAMETER": {
+                "changeType": "ADD_ENUM_VALUE",
+                "featureFlag": "CPP_786_CONFIGURATION_HIERARCHY_PARAMETERS"
+              },
+              "VAULT_OBJECT_TYPE_PARAMETERVALUE": {
+                "changeType": "ADD_ENUM_VALUE",
+                "featureFlag": "CPP_786_CONFIGURATION_HIERARCHY_PARAMETERS"
+              },
+              "VAULT_OBJECT_TYPE_POST_POSTING_FAILURE": {
+                "changeType": "ADD_ENUM_VALUE",
+                "featureFlag": "TM_69579_POST_POSTING_RETRYABILITY"
+              }
+            },
+            "x-enum-value-descriptions": {
+              "VAULT_OBJECT_TYPE_ACCOUNT": "An Account",
+              "VAULT_OBJECT_TYPE_ACCOUNT_CONFIG_ENTITY": "An AccountConfigEntity",
+              "VAULT_OBJECT_TYPE_ACCOUNT_CONFIG_ENTITY_ASSOC": "An AccountConfigEntityAssoc",
+              "VAULT_OBJECT_TYPE_ACCOUNT_CONFIG_GROUP": "An AccountConfigGroup",
+              "VAULT_OBJECT_TYPE_ACCOUNT_CONVERSION_RULE": "An AccountConversionRule",
+              "VAULT_OBJECT_TYPE_ACCOUNT_MIGRATION": "An AccountMigration",
+              "VAULT_OBJECT_TYPE_ACCOUNT_NOTE": "An AccountNote",
+              "VAULT_OBJECT_TYPE_ACCOUNT_PARAM_TIMESERIES": "An AccountParamTimeseries",
+              "VAULT_OBJECT_TYPE_ACCOUNT_PLAN_ASSOC": "An AccountPlanAssoc",
+              "VAULT_OBJECT_TYPE_ACCOUNT_SCHEDULE_ASSOC": "An AccountScheduleAssoc",
+              "VAULT_OBJECT_TYPE_ACCOUNT_SCHEDULE_TAG": "An AccountScheduleTag",
+              "VAULT_OBJECT_TYPE_ACCOUNT_UPDATE": "An AccountUpdate",
+              "VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_BATCH": "An AccountUpdateBatch",
+              "VAULT_OBJECT_TYPE_ACTION_LOG": "An ActionLog",
+              "VAULT_OBJECT_TYPE_AUDIT_LOG": "An AuditLog",
+              "VAULT_OBJECT_TYPE_BALANCE": "A Balance",
+              "VAULT_OBJECT_TYPE_BANK_ACCOUNT": "A BankAccount",
+              "VAULT_OBJECT_TYPE_BBAN": "A BBAN",
+              "VAULT_OBJECT_TYPE_BULK_ACCOUNT_UPDATE": "A BulkAccountUpdate",
+              "VAULT_OBJECT_TYPE_CALENDAR": "A Calendar",
+              "VAULT_OBJECT_TYPE_CALENDAR_EVENT": "A CalendarEvent",
+              "VAULT_OBJECT_TYPE_CALENDAR_OPERATION_CONFIG": "A CalendarOperationConfig",
+              "VAULT_OBJECT_TYPE_CALENDAR_PERIOD_DESCRIPTOR": "A CalendarPeriodDescriptor",
+              "VAULT_OBJECT_TYPE_CLAIM": "A Claim",
+              "VAULT_OBJECT_TYPE_CLAIM_ACTION": "A ClaimAction",
+              "VAULT_OBJECT_TYPE_CLAIM_DIRECT_DEBIT_ASSOCIATION": "A ClaimDirectDebitAssociation",
+              "VAULT_OBJECT_TYPE_CLAIM_REVERSAL": "A ClaimReversal",
+              "VAULT_OBJECT_TYPE_CLAIM_REVERSAL_ACTION": "A ClaimReversalAction",
+              "VAULT_OBJECT_TYPE_CONTRACT": "A Contract",
+              "VAULT_OBJECT_TYPE_CONTRACT_MODULE": "A ContractModule",
+              "VAULT_OBJECT_TYPE_CONTRACT_MODULE_VERSION": "A ContractModuleVersion",
+              "VAULT_OBJECT_TYPE_CONTRACT_TEMPLATE": "A ContractTemplate",
+              "VAULT_OBJECT_TYPE_CONTRACT_VERSION": "A ContractVersion",
+              "VAULT_OBJECT_TYPE_CUSTOMER": "A Customer",
+              "VAULT_OBJECT_TYPE_CUSTOMER_ADDRESS": "A CustomerAddress",
+              "VAULT_OBJECT_TYPE_DATA_PERMISSION": "A DataPermission",
+              "VAULT_OBJECT_TYPE_DEPENDENCY_GROUP": "A DependencyGroup",
+              "VAULT_OBJECT_TYPE_DIRECT_DEBIT": "A DirectDebit",
+              "VAULT_OBJECT_TYPE_DIRECT_DEBIT_ACTION": "A DirectDebitAction",
+              "VAULT_OBJECT_TYPE_DOCUMENT": "A Document",
+              "VAULT_OBJECT_TYPE_DOCUMENT_UPLOAD_URL": "A DocumentUploadUrl",
+              "VAULT_OBJECT_TYPE_DOCUMENT_URL": "A DocumentUrl",
+              "VAULT_OBJECT_TYPE_DOCUMENT_VERSION": "A DocumentVersion",
+              "VAULT_OBJECT_TYPE_EISCD_REPORT_DESCRIPTOR": "An EISCDReportDescriptor",
+              "VAULT_OBJECT_TYPE_ENTITY": "An Entity",
+              "VAULT_OBJECT_TYPE_FILE": "A File",
+              "VAULT_OBJECT_TYPE_FILE_VERSION": "A FileVersion",
+              "VAULT_OBJECT_TYPE_FLAG": "A Flag",
+              "VAULT_OBJECT_TYPE_FLAG_DEFINITION": "A FlagDefinition",
+              "VAULT_OBJECT_TYPE_FUTURE_PAYMENT_INSTRUCTION": "A FuturePaymentInstruction",
+              "VAULT_OBJECT_TYPE_GLOBAL_PARAMETER": "A GlobalParameter",
+              "VAULT_OBJECT_TYPE_GLOBAL_PARAMETERVALUE": "A GlobalParameterValue",
+              "VAULT_OBJECT_TYPE_GROUP": "A Group",
+              "VAULT_OBJECT_TYPE_GROUP_CONTRACT_VERSION_ASSOCIATION": "A GroupContractVersionAssociation",
+              "VAULT_OBJECT_TYPE_GROUP_VERSION": "A GroupVersion",
+              "VAULT_OBJECT_TYPE_IBAN": "An IBAN",
+              "VAULT_OBJECT_TYPE_INTERNAL_ACCOUNT": "An InternalAccount",
+              "VAULT_OBJECT_TYPE_JOB": "A Job",
+              "VAULT_OBJECT_TYPE_LEDGER_BALANCE": "A LedgerBalance",
+              "VAULT_OBJECT_TYPE_MANDATE": "A Mandate",
+              "VAULT_OBJECT_TYPE_MANDATE_ACTION": "A MandateAction",
+              "VAULT_OBJECT_TYPE_MODULUS_CHECK_WEIGHT_TABLE_DESCRIPTOR": "A ModulusCheckWeightTableDescriptor",
+              "VAULT_OBJECT_TYPE_PARAMETER": "A Parameter",
+              "VAULT_OBJECT_TYPE_PARAMETERVALUE": "A Parameter Value",
+              "VAULT_OBJECT_TYPE_PAYEE": "A Payee",
+              "VAULT_OBJECT_TYPE_PAYMENT": "A Payment",
+              "VAULT_OBJECT_TYPE_PAYMENT_ACTION": "A PaymentAction",
+              "VAULT_OBJECT_TYPE_PAYMENT_DEVICE": "A PaymentDevice",
+              "VAULT_OBJECT_TYPE_PAYMENT_DEVICE_LINK": "A PaymentDeviceLink",
+              "VAULT_OBJECT_TYPE_PAYMENT_ORDER": "A PaymentOrder",
+              "VAULT_OBJECT_TYPE_PAYMENT_REVERSAL": "A PaymentReversal",
+              "VAULT_OBJECT_TYPE_PAYMENT_SUBMISSION": "A PaymentSubmission",
+              "VAULT_OBJECT_TYPE_PIPELINE": "A Pipeline",
+              "VAULT_OBJECT_TYPE_PIPELINE_JOB": "A PipelineJob",
+              "VAULT_OBJECT_TYPE_PIPELINE_VERSION": "A PipelineVersion",
+              "VAULT_OBJECT_TYPE_PLAN": "A Plan",
+              "VAULT_OBJECT_TYPE_PLAN_MIGRATION": "A PlanMigration",
+              "VAULT_OBJECT_TYPE_PLAN_SCHEDULE": "A PlanSchedule",
+              "VAULT_OBJECT_TYPE_PLAN_UPDATE": "A PlanUpdate",
+              "VAULT_OBJECT_TYPE_POLICY": "A Policy",
+              "VAULT_OBJECT_TYPE_POSTING": "A Posting",
+              "VAULT_OBJECT_TYPE_POSTINGS_API_CLIENT": "A PostingsApiClient",
+              "VAULT_OBJECT_TYPE_POSTING_INSTRUCTION_BATCH": "A PostingInstructionBatch",
+              "VAULT_OBJECT_TYPE_POSTING_INSTRUCTION_BATCH_ASYNC": "A PostingInstructionBatch created asynchronously",
+              "VAULT_OBJECT_TYPE_POST_POSTING_FAILURE": "A PostPostingFailure",
+              "VAULT_OBJECT_TYPE_PRODUCT": "A Product",
+              "VAULT_OBJECT_TYPE_PRODUCT_ACCOUNT_ASSOCIATION": "A ProductAccountAssociation",
+              "VAULT_OBJECT_TYPE_PRODUCT_VERSION": "A ProductVersion",
+              "VAULT_OBJECT_TYPE_PRODUCT_VERSION_PARAMETERS_TIMESERIES": "A ProductVersionParametersTimeseries",
+              "VAULT_OBJECT_TYPE_RESOURCE": "A Resource",
+              "VAULT_OBJECT_TYPE_RESOURCE_BATCH": "A ResourceBatch",
+              "VAULT_OBJECT_TYPE_RESTRICTION": "A Restriction",
+              "VAULT_OBJECT_TYPE_RESTRICTION_DEFINITION": "A RestrictionDefinition",
+              "VAULT_OBJECT_TYPE_RESTRICTION_SET": "A RestrictionSet",
+              "VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION": "A RestrictionSetDefinition",
+              "VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_VERSION": "A RestrictionSetDefinitionVersion",
+              "VAULT_OBJECT_TYPE_ROLE": "A Role",
+              "VAULT_OBJECT_TYPE_ROLE_DATA_PERMISSION_ASSOC": "A RoleDataPermissionAssoc",
+              "VAULT_OBJECT_TYPE_ROLE_VAULT_PERMISSION_ASSOC": "A RoleVaultPermissionAssoc",
+              "VAULT_OBJECT_TYPE_SCHEDULE": "A Schedule",
+              "VAULT_OBJECT_TYPE_SCHEDULE_TAG": "A ScheduleTag",
+              "VAULT_OBJECT_TYPE_SCHEME": "A Scheme",
+              "VAULT_OBJECT_TYPE_SCHEME_CONFIG": "A SchemeConfig",
+              "VAULT_OBJECT_TYPE_SCHEME_MESSAGE": "A SchemeMessage",
+              "VAULT_OBJECT_TYPE_SERVICE_ACCOUNT": "A ServiceAccount",
+              "VAULT_OBJECT_TYPE_SMART_CONTRACT_MODULE_VERSIONS_LINK": "A SmartContractModuleVersionsLink",
+              "VAULT_OBJECT_TYPE_STANDING_ORDER_INSTRUCTION": "A StandingOrderInstruction",
+              "VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT": "A SupervisorContract",
+              "VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_VERSION": "A SupervisorContractVersion",
+              "VAULT_OBJECT_TYPE_TASK": "A Task",
+              "VAULT_OBJECT_TYPE_TASK_THREAD": "A TaskThread",
+              "VAULT_OBJECT_TYPE_TASK_THREAD_HISTORY_ENTRY": "A TaskThreadHistoryEntry",
+              "VAULT_OBJECT_TYPE_TICKET": "A Ticket",
+              "VAULT_OBJECT_TYPE_TICKET_TAG": "A TicketTag",
+              "VAULT_OBJECT_TYPE_TICKET_UPDATE": "A TicketUpdate",
+              "VAULT_OBJECT_TYPE_TRANSACTION": "A Transaction",
+              "VAULT_OBJECT_TYPE_UK_BANK_ACCOUNT_NUMBER": "A UkBankAccountNumber",
+              "VAULT_OBJECT_TYPE_UNKNOWN": "An unknown object",
+              "VAULT_OBJECT_TYPE_UNSOLICITED_MESSAGE": "An UnsolicitedMessage",
+              "VAULT_OBJECT_TYPE_VAULT_PERMISSION": "A VaultPermission",
+              "VAULT_OBJECT_TYPE_VAULT_VERSION": "A VaultVersion",
+              "VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION": "A WorkflowDefinition",
+              "VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_VERSION": "A WorkflowDefinitionVersion",
+              "VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE": "A WorkflowInstance",
+              "VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_EVENT": "A WorkflowInstanceEvent",
+              "VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_STATE": "A WorkflowInstanceState"
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "VAULT_OBJECT_TYPE_UNKNOWN",
+                  "VAULT_OBJECT_TYPE_ACCOUNT",
+                  "VAULT_OBJECT_TYPE_ACCOUNT_UPDATE",
+                  "VAULT_OBJECT_TYPE_AUDIT_LOG",
+                  "VAULT_OBJECT_TYPE_CUSTOMER",
+                  "VAULT_OBJECT_TYPE_CUSTOMER_ADDRESS",
+                  "VAULT_OBJECT_TYPE_FLAG",
+                  "VAULT_OBJECT_TYPE_FLAG_DEFINITION",
+                  "VAULT_OBJECT_TYPE_INTERNAL_ACCOUNT",
+                  "VAULT_OBJECT_TYPE_PAYEE",
+                  "VAULT_OBJECT_TYPE_PAYMENT_DEVICE",
+                  "VAULT_OBJECT_TYPE_PAYMENT_DEVICE_LINK",
+                  "VAULT_OBJECT_TYPE_PIPELINE",
+                  "VAULT_OBJECT_TYPE_PIPELINE_JOB",
+                  "VAULT_OBJECT_TYPE_PIPELINE_VERSION",
+                  "VAULT_OBJECT_TYPE_POSTING",
+                  "VAULT_OBJECT_TYPE_PRODUCT",
+                  "VAULT_OBJECT_TYPE_PRODUCT_VERSION",
+                  "VAULT_OBJECT_TYPE_RESTRICTION_DEFINITION",
+                  "VAULT_OBJECT_TYPE_RESTRICTION_SET",
+                  "VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION",
+                  "VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_VERSION",
+                  "VAULT_OBJECT_TYPE_SERVICE_ACCOUNT",
+                  "VAULT_OBJECT_TYPE_TICKET",
+                  "VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION",
+                  "VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_VERSION",
+                  "VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE",
+                  "VAULT_OBJECT_TYPE_PAYMENT",
+                  "VAULT_OBJECT_TYPE_UNSOLICITED_MESSAGE",
+                  "VAULT_OBJECT_TYPE_EISCD_REPORT_DESCRIPTOR",
+                  "VAULT_OBJECT_TYPE_MODULUS_CHECK_WEIGHT_TABLE_DESCRIPTOR",
+                  "VAULT_OBJECT_TYPE_UK_BANK_ACCOUNT_NUMBER",
+                  "VAULT_OBJECT_TYPE_ACCOUNT_MIGRATION",
+                  "VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_BATCH",
+                  "VAULT_OBJECT_TYPE_PAYMENT_SUBMISSION",
+                  "VAULT_OBJECT_TYPE_POSTING_INSTRUCTION_BATCH_ASYNC",
+                  "VAULT_OBJECT_TYPE_GLOBAL_PARAMETER",
+                  "VAULT_OBJECT_TYPE_GLOBAL_PARAMETERVALUE",
+                  "VAULT_OBJECT_TYPE_POLICY",
+                  "VAULT_OBJECT_TYPE_TRANSACTION",
+                  "VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT",
+                  "VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_VERSION",
+                  "VAULT_OBJECT_TYPE_PLAN",
+                  "VAULT_OBJECT_TYPE_PLAN_UPDATE",
+                  "VAULT_OBJECT_TYPE_ACCOUNT_PLAN_ASSOC",
+                  "VAULT_OBJECT_TYPE_DATA_PERMISSION",
+                  "VAULT_OBJECT_TYPE_VAULT_PERMISSION",
+                  "VAULT_OBJECT_TYPE_ROLE",
+                  "VAULT_OBJECT_TYPE_ROLE_VAULT_PERMISSION_ASSOC",
+                  "VAULT_OBJECT_TYPE_ROLE_DATA_PERMISSION_ASSOC",
+                  "VAULT_OBJECT_TYPE_TASK_THREAD",
+                  "VAULT_OBJECT_TYPE_TASK_THREAD_HISTORY_ENTRY",
+                  "VAULT_OBJECT_TYPE_TASK",
+                  "VAULT_OBJECT_TYPE_CALENDAR",
+                  "VAULT_OBJECT_TYPE_CALENDAR_EVENT",
+                  "VAULT_OBJECT_TYPE_CALENDAR_PERIOD_DESCRIPTOR",
+                  "VAULT_OBJECT_TYPE_ACCOUNT_SCHEDULE_TAG",
+                  "VAULT_OBJECT_TYPE_PAYMENT_ORDER",
+                  "VAULT_OBJECT_TYPE_STANDING_ORDER_INSTRUCTION",
+                  "VAULT_OBJECT_TYPE_FUTURE_PAYMENT_INSTRUCTION",
+                  "VAULT_OBJECT_TYPE_SCHEME_MESSAGE",
+                  "VAULT_OBJECT_TYPE_SCHEME",
+                  "VAULT_OBJECT_TYPE_SCHEME_CONFIG",
+                  "VAULT_OBJECT_TYPE_BANK_ACCOUNT",
+                  "VAULT_OBJECT_TYPE_FILE",
+                  "VAULT_OBJECT_TYPE_FILE_VERSION",
+                  "VAULT_OBJECT_TYPE_BBAN",
+                  "VAULT_OBJECT_TYPE_IBAN",
+                  "VAULT_OBJECT_TYPE_CONTRACT",
+                  "VAULT_OBJECT_TYPE_CONTRACT_VERSION",
+                  "VAULT_OBJECT_TYPE_GROUP",
+                  "VAULT_OBJECT_TYPE_GROUP_VERSION",
+                  "VAULT_OBJECT_TYPE_ACCOUNT_CONVERSION_RULE",
+                  "VAULT_OBJECT_TYPE_GROUP_CONTRACT_VERSION_ASSOCIATION",
+                  "VAULT_OBJECT_TYPE_PRODUCT_ACCOUNT_ASSOCIATION",
+                  "VAULT_OBJECT_TYPE_CONTRACT_MODULE",
+                  "VAULT_OBJECT_TYPE_CONTRACT_MODULE_VERSION",
+                  "VAULT_OBJECT_TYPE_RESOURCE",
+                  "VAULT_OBJECT_TYPE_RESOURCE_BATCH",
+                  "VAULT_OBJECT_TYPE_DEPENDENCY_GROUP",
+                  "VAULT_OBJECT_TYPE_BULK_ACCOUNT_UPDATE",
+                  "VAULT_OBJECT_TYPE_CLAIM",
+                  "VAULT_OBJECT_TYPE_CLAIM_ACTION",
+                  "VAULT_OBJECT_TYPE_CLAIM_REVERSAL",
+                  "VAULT_OBJECT_TYPE_CLAIM_REVERSAL_ACTION",
+                  "VAULT_OBJECT_TYPE_CLAIM_DIRECT_DEBIT_ASSOCIATION",
+                  "VAULT_OBJECT_TYPE_DIRECT_DEBIT",
+                  "VAULT_OBJECT_TYPE_DIRECT_DEBIT_ACTION",
+                  "VAULT_OBJECT_TYPE_MANDATE",
+                  "VAULT_OBJECT_TYPE_MANDATE_ACTION",
+                  "VAULT_OBJECT_TYPE_CALENDAR_OPERATION_CONFIG",
+                  "VAULT_OBJECT_TYPE_SMART_CONTRACT_MODULE_VERSIONS_LINK",
+                  "VAULT_OBJECT_TYPE_VAULT_VERSION",
+                  "VAULT_OBJECT_TYPE_ACCOUNT_NOTE",
+                  "VAULT_OBJECT_TYPE_ACCOUNT_PARAM_TIMESERIES",
+                  "VAULT_OBJECT_TYPE_ACCOUNT_SCHEDULE_ASSOC",
+                  "VAULT_OBJECT_TYPE_ACTION_LOG",
+                  "VAULT_OBJECT_TYPE_BALANCE",
+                  "VAULT_OBJECT_TYPE_CONTRACT_TEMPLATE",
+                  "VAULT_OBJECT_TYPE_DOCUMENT",
+                  "VAULT_OBJECT_TYPE_DOCUMENT_UPLOAD_URL",
+                  "VAULT_OBJECT_TYPE_DOCUMENT_URL",
+                  "VAULT_OBJECT_TYPE_DOCUMENT_VERSION",
+                  "VAULT_OBJECT_TYPE_ENTITY",
+                  "VAULT_OBJECT_TYPE_JOB",
+                  "VAULT_OBJECT_TYPE_PAYMENT_ACTION",
+                  "VAULT_OBJECT_TYPE_PAYMENT_REVERSAL",
+                  "VAULT_OBJECT_TYPE_PLAN_MIGRATION",
+                  "VAULT_OBJECT_TYPE_PLAN_SCHEDULE",
+                  "VAULT_OBJECT_TYPE_POSTINGS_API_CLIENT",
+                  "VAULT_OBJECT_TYPE_POSTING_INSTRUCTION_BATCH",
+                  "VAULT_OBJECT_TYPE_PRODUCT_VERSION_PARAMETERS_TIMESERIES",
+                  "VAULT_OBJECT_TYPE_RESTRICTION",
+                  "VAULT_OBJECT_TYPE_SCHEDULE",
+                  "VAULT_OBJECT_TYPE_SCHEDULE_TAG",
+                  "VAULT_OBJECT_TYPE_TICKET_TAG",
+                  "VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_EVENT",
+                  "VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_STATE",
+                  "VAULT_OBJECT_TYPE_LEDGER_BALANCE",
+                  "VAULT_OBJECT_TYPE_TICKET_UPDATE",
+                  "VAULT_OBJECT_TYPE_POST_POSTING_FAILURE",
+                  "VAULT_OBJECT_TYPE_ACCOUNT_CONFIG_ENTITY",
+                  "VAULT_OBJECT_TYPE_ACCOUNT_CONFIG_GROUP",
+                  "VAULT_OBJECT_TYPE_ACCOUNT_CONFIG_ENTITY_ASSOC",
+                  "VAULT_OBJECT_TYPE_PARAMETER",
+                  "VAULT_OBJECT_TYPE_PARAMETERVALUE"
+                ]
+              }
+            }
+          },
+          {
+            "description": "A list of IDs associated with the Vault resources that actions were performed on. The number of Vault object IDs that may be provided is determined by the number of Vault object types that are provided. The constraints are as follows: - If 0 Vault object types are provided, 0 Vault object IDs may be provided. - If 1 Vault object types is provided, any number of Vault object IDs may be provided. - If more than 1 Vault object types are provided, 0 Vault object IDs may be provided.",
+            "name": "vault_object_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "The IDs of Audit Logs whose associated Action Logs are to be included.",
+            "name": "audit_log_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "The Group IDs the Action Logs are to be associated with.",
+            "name": "group_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "The number of Action Logs to be retrieved. Must be in the range 1-100 (inclusive). Required.",
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "name": "create_timestamp_range.from",
+            "in": "query",
+            "required": false,
+            "description": "The range to include `create_timestamp`. Optional. This is an auto generated field to make the swagger compatible with the third party codegen tool."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "name": "create_timestamp_range.to",
+            "in": "query",
+            "required": false,
+            "description": "The range to include `create_timestamp`. Optional. This is an auto generated field to make the swagger compatible with the third party codegen tool."
+          }
+        ],
+        "tags": [
+          "AuditAPIActionLogs"
+        ],
+        "x-section": "Action logs",
+        "x-list-consistency-level": "BEST_EFFORT",
+        "x-permission-scopes": [
+          "audit:read",
+          "audit.action_logs:read"
+        ]
+      }
+    },
+    "/v1/action-logs/{id}": {
+      "get": {
+        "summary": "Retrieves a specific Action Log using its ID.",
+        "operationId": "GetActionLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/action_logsActionLog"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The ID of the Action Log to be retrieved.",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "AuditAPIActionLogs"
+        ],
+        "x-section": "Action logs",
+        "x-permission-scopes": [
+          "audit:read",
+          "audit.action_logs:read"
+        ]
+      }
+    },
+    "/v1/action-logs:batchGet": {
+      "get": {
+        "summary": "Retrieves specific Action Logs using their IDs.",
+        "operationId": "BatchGetActionLogs",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/action_logsBatchGetActionLogsResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "A list of IDs of Action Logs to be retrieved. If any of the IDs is invalid, it will cause the whole request to fail with a \"not found\" error. Required; must be non-empty.",
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "AuditAPIActionLogs"
+        ],
+        "x-section": "Action logs",
+        "x-permission-scopes": [
+          "audit:read",
+          "audit.action_logs:read"
+        ]
+      }
+    },
+    "/v1/audit-logs": {
+      "get": {
+        "summary": "A list of all available Audit Logs that have been recorded. Results are ordered by descending `create_timestamp`.",
+        "operationId": "ListAuditLogs",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/audit_logsListAuditLogsResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "Additional fields to return; optional. Some Audit Log fields are omitted by default as they are bulky or costly; if those fields are specified here, they will be populated in the Audit Logs of the response.",
+            "name": "fields_to_include",
+            "in": "query",
+            "required": false,
+            "x-enum-value-descriptions": {
+              "INCLUDE_FIELD_REQUEST_PARAMETERS": "Includes the request parameters field."
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "INCLUDE_FIELD_REQUEST_PARAMETERS"
+                ]
+              }
+            }
+          },
+          {
+            "description": "The API types recorded Audit Logs are to be included for. Optional.",
+            "name": "api_types",
+            "in": "query",
+            "required": false,
+            "x-enum-value-descriptions": {
+              "AUDIT_LOG_API_TYPE_ACCESS_CONTROL_API": "The Access Control API.",
+              "AUDIT_LOG_API_TYPE_AUDIT_API": "The Audit API.",
+              "AUDIT_LOG_API_TYPE_CORE_API": "The Core API.",
+              "AUDIT_LOG_API_TYPE_CORE_API_STREAM": "The Core Streaming API.",
+              "AUDIT_LOG_API_TYPE_DATA_LOADER_API": "The Data Loader API.",
+              "AUDIT_LOG_API_TYPE_DATA_LOADER_STREAM_API": "The Data Loader Stream API.",
+              "AUDIT_LOG_API_TYPE_LEGACY_ADMIN_API": "The legacy internal admin platform that is being phased out and replaced by Core API. This API is not publicly exposed. However, the Operations Dashboard uses it for some of its functionality; this means some Audit Logs will be associated with this API.",
+              "AUDIT_LOG_API_TYPE_PAYMENTS_INTEGRATION_API": "The Payments Integration (or Postings) API.",
+              "AUDIT_LOG_API_TYPE_PAYMENT_HUB_API": "The Payments Hub API.",
+              "AUDIT_LOG_API_TYPE_PRODUCTS_API": "The Products API.",
+              "AUDIT_LOG_API_TYPE_PRODUCTS_API_STREAM": "The Products Streaming API.",
+              "AUDIT_LOG_API_TYPE_UNKNOWN": "The default enum value. A unknown public Vault API.",
+              "AUDIT_LOG_API_TYPE_WORKFLOWS_API": "The Workflows API.",
+              "AUDIT_LOG_API_TYPE_WORKFLOWS_API_STREAM": "The Workflows Streaming API.",
+              "AUDIT_LOG_API_TYPE_XPL_API": "The Experience Layer API.",
+              "AUDIT_LOG_API_TYPE_XPL_API_STREAM": "The Experience Layer Streaming API."
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "AUDIT_LOG_API_TYPE_UNKNOWN",
+                  "AUDIT_LOG_API_TYPE_CORE_API_STREAM",
+                  "AUDIT_LOG_API_TYPE_PAYMENTS_INTEGRATION_API",
+                  "AUDIT_LOG_API_TYPE_LEGACY_ADMIN_API",
+                  "AUDIT_LOG_API_TYPE_CORE_API",
+                  "AUDIT_LOG_API_TYPE_AUDIT_API",
+                  "AUDIT_LOG_API_TYPE_WORKFLOWS_API",
+                  "AUDIT_LOG_API_TYPE_WORKFLOWS_API_STREAM",
+                  "AUDIT_LOG_API_TYPE_XPL_API",
+                  "AUDIT_LOG_API_TYPE_PAYMENT_HUB_API",
+                  "AUDIT_LOG_API_TYPE_DATA_LOADER_API",
+                  "AUDIT_LOG_API_TYPE_DATA_LOADER_STREAM_API",
+                  "AUDIT_LOG_API_TYPE_XPL_API_STREAM",
+                  "AUDIT_LOG_API_TYPE_PRODUCTS_API",
+                  "AUDIT_LOG_API_TYPE_ACCESS_CONTROL_API",
+                  "AUDIT_LOG_API_TYPE_PRODUCTS_API_STREAM"
+                ]
+              }
+            }
+          },
+          {
+            "description": "The fully-quantifiable gRPC endpoint or Streaming API topic name this request was made to. Optional.",
+            "name": "endpoint_names",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "The full names of the REST endpoints that this request was made to. Optional.",
+            "name": "rest_endpoint_names",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "The IDs of customers or employees who initiated this request. Optional.",
+            "name": "request_initiator_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "The IDs of customers the desired requests were made on behalf of. Optional.",
+            "name": "on_behalf_of_customer_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "The IDs of employees the desired requests were made on behalf of. Optional.",
+            "name": "on_behalf_of_employee_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "The Group IDs the Audit Logs are to be associated with. Optional.",
+            "name": "group_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "The number of results to be retrieved. Required; non-zero.",
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "description": "The token of the page results are to be retrieved from. If empty, the first page of results will be returned. Optional.",
+            "name": "page_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "schema": {
+              "$ref": "#/components/schemas/commonAccessControlContext",
+              "description": "Specifies the details of the user performing this call. Used to enforce access control on the resource."
+            },
+            "name": "access_control_context",
+            "in": "query",
+            "required": false
+          }
+        ],
+        "tags": [
+          "AuditAPIAuditLogs"
+        ],
+        "x-section": "Audit logs",
+        "x-list-consistency-level": "BEST_EFFORT",
+        "x-permission-scopes": [
+          "audit:read",
+          "audit.audit_logs:read"
+        ]
+      }
+    },
+    "/v1/audit-logs/{id}": {
+      "get": {
+        "summary": "Retrieves a specific Audit Log using its ID.",
+        "operationId": "GetAuditLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/audit_logsAuditLog"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The ID of the Audit Log that is to be retrieved.",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Additional fields to return; optional. Some audit log fields are omitted by default as they are bulky or costly; if those fields are specified here, they will be populated in the audit logs of the response.",
+            "name": "fields_to_include",
+            "in": "query",
+            "required": false,
+            "x-enum-value-descriptions": {
+              "INCLUDE_FIELD_REQUEST_PARAMETERS": "Includes the request parameters field.",
+              "INCLUDE_FIELD_RESPONSE_PAYLOAD": "Includes the response payload field."
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "INCLUDE_FIELD_REQUEST_PARAMETERS",
+                  "INCLUDE_FIELD_RESPONSE_PAYLOAD"
+                ]
+              }
+            }
+          },
+          {
+            "schema": {
+              "$ref": "#/components/schemas/commonAccessControlContext",
+              "description": "Specifies the details of the user performing this call. Used to enforce access control on the resource."
+            },
+            "name": "access_control_context",
+            "in": "query",
+            "required": false
+          }
+        ],
+        "tags": [
+          "AuditAPIAuditLogs"
+        ],
+        "x-section": "Audit logs",
+        "x-permission-scopes": [
+          "audit:read",
+          "audit.audit_logs:read"
+        ]
+      }
+    },
+    "/v1/audit-logs:batchGet": {
+      "get": {
+        "summary": "Retrieves specific Audit Logs by their ID.",
+        "operationId": "BatchGetAuditLogs",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/audit_logsBatchGetAuditLogsResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "A list of IDs of Audit Logs to be retrieved. If any ID is invalid, the whole request will fail with a \"not found\" error. Required; must be non-empty.",
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Additional fields to return; optional. Some Audit Log fields are omitted by default as they are bulky or costly; if those fields are specified here, they will be populated in the Audit Logs of the response.",
+            "name": "fields_to_include",
+            "in": "query",
+            "required": false,
+            "x-enum-value-descriptions": {
+              "INCLUDE_FIELD_REQUEST_PARAMETERS": "Includes the request parameters field."
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "INCLUDE_FIELD_REQUEST_PARAMETERS"
+                ]
+              }
+            }
+          },
+          {
+            "schema": {
+              "$ref": "#/components/schemas/commonAccessControlContext",
+              "description": "Specifies the details of the user performing this call. Used to enforce access control on the resource."
+            },
+            "name": "access_control_context",
+            "in": "query",
+            "required": false
+          }
+        ],
+        "tags": [
+          "AuditAPIAuditLogs"
+        ],
+        "x-section": "Audit logs",
+        "x-permission-scopes": [
+          "audit:read",
+          "audit.audit_logs:read"
+        ]
+      }
+    }
+  },
+  "x-sections": {
+    "Action logs": {},
+    "Audit logs": {}
+  },
+  "openapi": "3.0.1",
+  "components": {
+    "schemas": {
+      "action_logsActionLog": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique ID for this log. Output only."
+          },
+          "create_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of when the action was first captured."
+          },
+          "request_initiator_id": {
+            "type": "string",
+            "description": "The ID of the Service Account that originally initiated this action."
+          },
+          "on_behalf_of_customer_id": {
+            "type": "string",
+            "description": "The ID of the customer on whose behalf this action was performed."
+          },
+          "on_behalf_of_employee_id": {
+            "type": "string",
+            "description": "The ID of the employee on whose behalf this action was performed."
+          },
+          "vault_object_type": {
+            "$ref": "#/components/schemas/commonVaultObjectType",
+            "description": "The type of Vault Object this action was performed on."
+          },
+          "vault_object_id": {
+            "type": "string",
+            "description": "The Vault Object IDs of the object affected by this action."
+          },
+          "action_data": {
+            "type": "string",
+            "description": "A JSON string containing the updated values of the updated fields. The JSON object consists of a map of the field names to the new values as set in the mutation request. Empty for deletes."
+          },
+          "audit_log_id": {
+            "type": "string",
+            "description": "The ID for the full Audit Log this log is derived from."
+          },
+          "create_request_id": {
+            "type": "string",
+            "description": "The request ID that was used to create this log. Output only."
+          },
+          "group_id": {
+            "type": "string",
+            "description": "An ID for correlating / grouping Audit and Action Logs generated by the same request to a Public API. This ID will be propagated on sub-requests triggered by that request."
+          },
+          "standard_action": {
+            "$ref": "#/components/schemas/action_logsActionLogStandardAction",
+            "required": true
+          }
+        }
+      },
+      "action_logsActionLogStandardAction": {
+        "type": "string",
+        "enum": [
+          "ACTION_LOG_STANDARD_ACTION_UNKNOWN",
+          "ACTION_LOG_STANDARD_ACTION_CREATE",
+          "ACTION_LOG_STANDARD_ACTION_UPDATE",
+          "ACTION_LOG_STANDARD_ACTION_DELETE"
+        ],
+        "default": "ACTION_LOG_STANDARD_ACTION_UNKNOWN",
+        "description": "The operation that the Action Log relates to."
+      },
+      "action_logsBatchGetActionLogsResponse": {
+        "type": "object",
+        "properties": {
+          "action_logs": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/action_logsActionLog"
+            },
+            "description": "A mapping of Action Log ID to Action Log."
+          }
+        }
+      },
+      "action_logsListActionLogsResponse": {
+        "type": "object",
+        "properties": {
+          "action_logs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/action_logsActionLog"
+            },
+            "description": "A list of matching Action Logs."
+          },
+          "previous_page_token": {
+            "type": "string",
+            "description": "The pagination token to retrieve the previous page. If empty, this is the first page of results."
+          },
+          "next_page_token": {
+            "type": "string",
+            "description": "The pagination token to retrieve the next page. If empty, this is the last page of results."
+          }
+        }
+      },
+      "commonVaultObjectType": {
+        "type": "string",
+        "enum": [
+          "VAULT_OBJECT_TYPE_UNKNOWN",
+          "VAULT_OBJECT_TYPE_ACCOUNT",
+          "VAULT_OBJECT_TYPE_ACCOUNT_UPDATE",
+          "VAULT_OBJECT_TYPE_AUDIT_LOG",
+          "VAULT_OBJECT_TYPE_CUSTOMER",
+          "VAULT_OBJECT_TYPE_CUSTOMER_ADDRESS",
+          "VAULT_OBJECT_TYPE_FLAG",
+          "VAULT_OBJECT_TYPE_FLAG_DEFINITION",
+          "VAULT_OBJECT_TYPE_INTERNAL_ACCOUNT",
+          "VAULT_OBJECT_TYPE_PAYEE",
+          "VAULT_OBJECT_TYPE_PAYMENT_DEVICE",
+          "VAULT_OBJECT_TYPE_PAYMENT_DEVICE_LINK",
+          "VAULT_OBJECT_TYPE_PIPELINE",
+          "VAULT_OBJECT_TYPE_PIPELINE_JOB",
+          "VAULT_OBJECT_TYPE_PIPELINE_VERSION",
+          "VAULT_OBJECT_TYPE_POSTING",
+          "VAULT_OBJECT_TYPE_PRODUCT",
+          "VAULT_OBJECT_TYPE_PRODUCT_VERSION",
+          "VAULT_OBJECT_TYPE_RESTRICTION_DEFINITION",
+          "VAULT_OBJECT_TYPE_RESTRICTION_SET",
+          "VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION",
+          "VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_VERSION",
+          "VAULT_OBJECT_TYPE_SERVICE_ACCOUNT",
+          "VAULT_OBJECT_TYPE_TICKET",
+          "VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION",
+          "VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_VERSION",
+          "VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE",
+          "VAULT_OBJECT_TYPE_PAYMENT",
+          "VAULT_OBJECT_TYPE_UNSOLICITED_MESSAGE",
+          "VAULT_OBJECT_TYPE_EISCD_REPORT_DESCRIPTOR",
+          "VAULT_OBJECT_TYPE_MODULUS_CHECK_WEIGHT_TABLE_DESCRIPTOR",
+          "VAULT_OBJECT_TYPE_UK_BANK_ACCOUNT_NUMBER",
+          "VAULT_OBJECT_TYPE_ACCOUNT_MIGRATION",
+          "VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_BATCH",
+          "VAULT_OBJECT_TYPE_PAYMENT_SUBMISSION",
+          "VAULT_OBJECT_TYPE_POSTING_INSTRUCTION_BATCH_ASYNC",
+          "VAULT_OBJECT_TYPE_GLOBAL_PARAMETER",
+          "VAULT_OBJECT_TYPE_GLOBAL_PARAMETERVALUE",
+          "VAULT_OBJECT_TYPE_POLICY",
+          "VAULT_OBJECT_TYPE_TRANSACTION",
+          "VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT",
+          "VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_VERSION",
+          "VAULT_OBJECT_TYPE_PLAN",
+          "VAULT_OBJECT_TYPE_PLAN_UPDATE",
+          "VAULT_OBJECT_TYPE_ACCOUNT_PLAN_ASSOC",
+          "VAULT_OBJECT_TYPE_DATA_PERMISSION",
+          "VAULT_OBJECT_TYPE_VAULT_PERMISSION",
+          "VAULT_OBJECT_TYPE_ROLE",
+          "VAULT_OBJECT_TYPE_ROLE_VAULT_PERMISSION_ASSOC",
+          "VAULT_OBJECT_TYPE_ROLE_DATA_PERMISSION_ASSOC",
+          "VAULT_OBJECT_TYPE_TASK_THREAD",
+          "VAULT_OBJECT_TYPE_TASK_THREAD_HISTORY_ENTRY",
+          "VAULT_OBJECT_TYPE_TASK",
+          "VAULT_OBJECT_TYPE_CALENDAR",
+          "VAULT_OBJECT_TYPE_CALENDAR_EVENT",
+          "VAULT_OBJECT_TYPE_CALENDAR_PERIOD_DESCRIPTOR",
+          "VAULT_OBJECT_TYPE_ACCOUNT_SCHEDULE_TAG",
+          "VAULT_OBJECT_TYPE_PAYMENT_ORDER",
+          "VAULT_OBJECT_TYPE_STANDING_ORDER_INSTRUCTION",
+          "VAULT_OBJECT_TYPE_FUTURE_PAYMENT_INSTRUCTION",
+          "VAULT_OBJECT_TYPE_SCHEME_MESSAGE",
+          "VAULT_OBJECT_TYPE_SCHEME",
+          "VAULT_OBJECT_TYPE_SCHEME_CONFIG",
+          "VAULT_OBJECT_TYPE_BANK_ACCOUNT",
+          "VAULT_OBJECT_TYPE_FILE",
+          "VAULT_OBJECT_TYPE_FILE_VERSION",
+          "VAULT_OBJECT_TYPE_BBAN",
+          "VAULT_OBJECT_TYPE_IBAN",
+          "VAULT_OBJECT_TYPE_CONTRACT",
+          "VAULT_OBJECT_TYPE_CONTRACT_VERSION",
+          "VAULT_OBJECT_TYPE_GROUP",
+          "VAULT_OBJECT_TYPE_GROUP_VERSION",
+          "VAULT_OBJECT_TYPE_ACCOUNT_CONVERSION_RULE",
+          "VAULT_OBJECT_TYPE_GROUP_CONTRACT_VERSION_ASSOCIATION",
+          "VAULT_OBJECT_TYPE_PRODUCT_ACCOUNT_ASSOCIATION",
+          "VAULT_OBJECT_TYPE_CONTRACT_MODULE",
+          "VAULT_OBJECT_TYPE_CONTRACT_MODULE_VERSION",
+          "VAULT_OBJECT_TYPE_RESOURCE",
+          "VAULT_OBJECT_TYPE_RESOURCE_BATCH",
+          "VAULT_OBJECT_TYPE_DEPENDENCY_GROUP",
+          "VAULT_OBJECT_TYPE_BULK_ACCOUNT_UPDATE",
+          "VAULT_OBJECT_TYPE_CLAIM",
+          "VAULT_OBJECT_TYPE_CLAIM_ACTION",
+          "VAULT_OBJECT_TYPE_CLAIM_REVERSAL",
+          "VAULT_OBJECT_TYPE_CLAIM_REVERSAL_ACTION",
+          "VAULT_OBJECT_TYPE_CLAIM_DIRECT_DEBIT_ASSOCIATION",
+          "VAULT_OBJECT_TYPE_DIRECT_DEBIT",
+          "VAULT_OBJECT_TYPE_DIRECT_DEBIT_ACTION",
+          "VAULT_OBJECT_TYPE_MANDATE",
+          "VAULT_OBJECT_TYPE_MANDATE_ACTION",
+          "VAULT_OBJECT_TYPE_CALENDAR_OPERATION_CONFIG",
+          "VAULT_OBJECT_TYPE_SMART_CONTRACT_MODULE_VERSIONS_LINK",
+          "VAULT_OBJECT_TYPE_VAULT_VERSION",
+          "VAULT_OBJECT_TYPE_ACCOUNT_NOTE",
+          "VAULT_OBJECT_TYPE_ACCOUNT_PARAM_TIMESERIES",
+          "VAULT_OBJECT_TYPE_ACCOUNT_SCHEDULE_ASSOC",
+          "VAULT_OBJECT_TYPE_ACTION_LOG",
+          "VAULT_OBJECT_TYPE_BALANCE",
+          "VAULT_OBJECT_TYPE_CONTRACT_TEMPLATE",
+          "VAULT_OBJECT_TYPE_DOCUMENT",
+          "VAULT_OBJECT_TYPE_DOCUMENT_UPLOAD_URL",
+          "VAULT_OBJECT_TYPE_DOCUMENT_URL",
+          "VAULT_OBJECT_TYPE_DOCUMENT_VERSION",
+          "VAULT_OBJECT_TYPE_ENTITY",
+          "VAULT_OBJECT_TYPE_JOB",
+          "VAULT_OBJECT_TYPE_PAYMENT_ACTION",
+          "VAULT_OBJECT_TYPE_PAYMENT_REVERSAL",
+          "VAULT_OBJECT_TYPE_PLAN_MIGRATION",
+          "VAULT_OBJECT_TYPE_PLAN_SCHEDULE",
+          "VAULT_OBJECT_TYPE_POSTINGS_API_CLIENT",
+          "VAULT_OBJECT_TYPE_POSTING_INSTRUCTION_BATCH",
+          "VAULT_OBJECT_TYPE_PRODUCT_VERSION_PARAMETERS_TIMESERIES",
+          "VAULT_OBJECT_TYPE_RESTRICTION",
+          "VAULT_OBJECT_TYPE_SCHEDULE",
+          "VAULT_OBJECT_TYPE_SCHEDULE_TAG",
+          "VAULT_OBJECT_TYPE_TICKET_TAG",
+          "VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_EVENT",
+          "VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_STATE",
+          "VAULT_OBJECT_TYPE_LEDGER_BALANCE",
+          "VAULT_OBJECT_TYPE_TICKET_UPDATE",
+          "VAULT_OBJECT_TYPE_POST_POSTING_FAILURE",
+          "VAULT_OBJECT_TYPE_ACCOUNT_CONFIG_ENTITY",
+          "VAULT_OBJECT_TYPE_ACCOUNT_CONFIG_GROUP",
+          "VAULT_OBJECT_TYPE_ACCOUNT_CONFIG_ENTITY_ASSOC",
+          "VAULT_OBJECT_TYPE_PARAMETER",
+          "VAULT_OBJECT_TYPE_PARAMETERVALUE"
+        ],
+        "default": "VAULT_OBJECT_TYPE_UNKNOWN",
+        "description": "A list of all Vault objects or resources. These are any resource objects (messages with an `id` field) that are defined in any public Vault API.",
+        "x-enum-value-release-info": {
+          "VAULT_OBJECT_TYPE_ACCOUNT_CONFIG_ENTITY": {
+            "changeType": "ADD_ENUM_VALUE",
+            "featureFlag": "CPP_785_CONFIGURATION_HIERARCHY"
+          },
+          "VAULT_OBJECT_TYPE_ACCOUNT_CONFIG_ENTITY_ASSOC": {
+            "changeType": "ADD_ENUM_VALUE",
+            "featureFlag": "CPP_785_CONFIGURATION_HIERARCHY"
+          },
+          "VAULT_OBJECT_TYPE_ACCOUNT_CONFIG_GROUP": {
+            "changeType": "ADD_ENUM_VALUE",
+            "featureFlag": "CPP_785_CONFIGURATION_HIERARCHY"
+          },
+          "VAULT_OBJECT_TYPE_ENTITY": {
+            "changeType": "ADD_ENUM_VALUE",
+            "featureFlag": "TMV_685_MULTI_ENTITY_MVP"
+          },
+          "VAULT_OBJECT_TYPE_PARAMETER": {
+            "changeType": "ADD_ENUM_VALUE",
+            "featureFlag": "CPP_786_CONFIGURATION_HIERARCHY_PARAMETERS"
+          },
+          "VAULT_OBJECT_TYPE_PARAMETERVALUE": {
+            "changeType": "ADD_ENUM_VALUE",
+            "featureFlag": "CPP_786_CONFIGURATION_HIERARCHY_PARAMETERS"
+          },
+          "VAULT_OBJECT_TYPE_POST_POSTING_FAILURE": {
+            "changeType": "ADD_ENUM_VALUE",
+            "featureFlag": "TM_69579_POST_POSTING_RETRYABILITY"
+          }
+        },
+        "x-enum-value-descriptions": {
+          "VAULT_OBJECT_TYPE_ACCOUNT": "An Account",
+          "VAULT_OBJECT_TYPE_ACCOUNT_CONFIG_ENTITY": "An AccountConfigEntity",
+          "VAULT_OBJECT_TYPE_ACCOUNT_CONFIG_ENTITY_ASSOC": "An AccountConfigEntityAssoc",
+          "VAULT_OBJECT_TYPE_ACCOUNT_CONFIG_GROUP": "An AccountConfigGroup",
+          "VAULT_OBJECT_TYPE_ACCOUNT_CONVERSION_RULE": "An AccountConversionRule",
+          "VAULT_OBJECT_TYPE_ACCOUNT_MIGRATION": "An AccountMigration",
+          "VAULT_OBJECT_TYPE_ACCOUNT_NOTE": "An AccountNote",
+          "VAULT_OBJECT_TYPE_ACCOUNT_PARAM_TIMESERIES": "An AccountParamTimeseries",
+          "VAULT_OBJECT_TYPE_ACCOUNT_PLAN_ASSOC": "An AccountPlanAssoc",
+          "VAULT_OBJECT_TYPE_ACCOUNT_SCHEDULE_ASSOC": "An AccountScheduleAssoc",
+          "VAULT_OBJECT_TYPE_ACCOUNT_SCHEDULE_TAG": "An AccountScheduleTag",
+          "VAULT_OBJECT_TYPE_ACCOUNT_UPDATE": "An AccountUpdate",
+          "VAULT_OBJECT_TYPE_ACCOUNT_UPDATE_BATCH": "An AccountUpdateBatch",
+          "VAULT_OBJECT_TYPE_ACTION_LOG": "An ActionLog",
+          "VAULT_OBJECT_TYPE_AUDIT_LOG": "An AuditLog",
+          "VAULT_OBJECT_TYPE_BALANCE": "A Balance",
+          "VAULT_OBJECT_TYPE_BANK_ACCOUNT": "A BankAccount",
+          "VAULT_OBJECT_TYPE_BBAN": "A BBAN",
+          "VAULT_OBJECT_TYPE_BULK_ACCOUNT_UPDATE": "A BulkAccountUpdate",
+          "VAULT_OBJECT_TYPE_CALENDAR": "A Calendar",
+          "VAULT_OBJECT_TYPE_CALENDAR_EVENT": "A CalendarEvent",
+          "VAULT_OBJECT_TYPE_CALENDAR_OPERATION_CONFIG": "A CalendarOperationConfig",
+          "VAULT_OBJECT_TYPE_CALENDAR_PERIOD_DESCRIPTOR": "A CalendarPeriodDescriptor",
+          "VAULT_OBJECT_TYPE_CLAIM": "A Claim",
+          "VAULT_OBJECT_TYPE_CLAIM_ACTION": "A ClaimAction",
+          "VAULT_OBJECT_TYPE_CLAIM_DIRECT_DEBIT_ASSOCIATION": "A ClaimDirectDebitAssociation",
+          "VAULT_OBJECT_TYPE_CLAIM_REVERSAL": "A ClaimReversal",
+          "VAULT_OBJECT_TYPE_CLAIM_REVERSAL_ACTION": "A ClaimReversalAction",
+          "VAULT_OBJECT_TYPE_CONTRACT": "A Contract",
+          "VAULT_OBJECT_TYPE_CONTRACT_MODULE": "A ContractModule",
+          "VAULT_OBJECT_TYPE_CONTRACT_MODULE_VERSION": "A ContractModuleVersion",
+          "VAULT_OBJECT_TYPE_CONTRACT_TEMPLATE": "A ContractTemplate",
+          "VAULT_OBJECT_TYPE_CONTRACT_VERSION": "A ContractVersion",
+          "VAULT_OBJECT_TYPE_CUSTOMER": "A Customer",
+          "VAULT_OBJECT_TYPE_CUSTOMER_ADDRESS": "A CustomerAddress",
+          "VAULT_OBJECT_TYPE_DATA_PERMISSION": "A DataPermission",
+          "VAULT_OBJECT_TYPE_DEPENDENCY_GROUP": "A DependencyGroup",
+          "VAULT_OBJECT_TYPE_DIRECT_DEBIT": "A DirectDebit",
+          "VAULT_OBJECT_TYPE_DIRECT_DEBIT_ACTION": "A DirectDebitAction",
+          "VAULT_OBJECT_TYPE_DOCUMENT": "A Document",
+          "VAULT_OBJECT_TYPE_DOCUMENT_UPLOAD_URL": "A DocumentUploadUrl",
+          "VAULT_OBJECT_TYPE_DOCUMENT_URL": "A DocumentUrl",
+          "VAULT_OBJECT_TYPE_DOCUMENT_VERSION": "A DocumentVersion",
+          "VAULT_OBJECT_TYPE_EISCD_REPORT_DESCRIPTOR": "An EISCDReportDescriptor",
+          "VAULT_OBJECT_TYPE_ENTITY": "An Entity",
+          "VAULT_OBJECT_TYPE_FILE": "A File",
+          "VAULT_OBJECT_TYPE_FILE_VERSION": "A FileVersion",
+          "VAULT_OBJECT_TYPE_FLAG": "A Flag",
+          "VAULT_OBJECT_TYPE_FLAG_DEFINITION": "A FlagDefinition",
+          "VAULT_OBJECT_TYPE_FUTURE_PAYMENT_INSTRUCTION": "A FuturePaymentInstruction",
+          "VAULT_OBJECT_TYPE_GLOBAL_PARAMETER": "A GlobalParameter",
+          "VAULT_OBJECT_TYPE_GLOBAL_PARAMETERVALUE": "A GlobalParameterValue",
+          "VAULT_OBJECT_TYPE_GROUP": "A Group",
+          "VAULT_OBJECT_TYPE_GROUP_CONTRACT_VERSION_ASSOCIATION": "A GroupContractVersionAssociation",
+          "VAULT_OBJECT_TYPE_GROUP_VERSION": "A GroupVersion",
+          "VAULT_OBJECT_TYPE_IBAN": "An IBAN",
+          "VAULT_OBJECT_TYPE_INTERNAL_ACCOUNT": "An InternalAccount",
+          "VAULT_OBJECT_TYPE_JOB": "A Job",
+          "VAULT_OBJECT_TYPE_LEDGER_BALANCE": "A LedgerBalance",
+          "VAULT_OBJECT_TYPE_MANDATE": "A Mandate",
+          "VAULT_OBJECT_TYPE_MANDATE_ACTION": "A MandateAction",
+          "VAULT_OBJECT_TYPE_MODULUS_CHECK_WEIGHT_TABLE_DESCRIPTOR": "A ModulusCheckWeightTableDescriptor",
+          "VAULT_OBJECT_TYPE_PARAMETER": "A Parameter",
+          "VAULT_OBJECT_TYPE_PARAMETERVALUE": "A Parameter Value",
+          "VAULT_OBJECT_TYPE_PAYEE": "A Payee",
+          "VAULT_OBJECT_TYPE_PAYMENT": "A Payment",
+          "VAULT_OBJECT_TYPE_PAYMENT_ACTION": "A PaymentAction",
+          "VAULT_OBJECT_TYPE_PAYMENT_DEVICE": "A PaymentDevice",
+          "VAULT_OBJECT_TYPE_PAYMENT_DEVICE_LINK": "A PaymentDeviceLink",
+          "VAULT_OBJECT_TYPE_PAYMENT_ORDER": "A PaymentOrder",
+          "VAULT_OBJECT_TYPE_PAYMENT_REVERSAL": "A PaymentReversal",
+          "VAULT_OBJECT_TYPE_PAYMENT_SUBMISSION": "A PaymentSubmission",
+          "VAULT_OBJECT_TYPE_PIPELINE": "A Pipeline",
+          "VAULT_OBJECT_TYPE_PIPELINE_JOB": "A PipelineJob",
+          "VAULT_OBJECT_TYPE_PIPELINE_VERSION": "A PipelineVersion",
+          "VAULT_OBJECT_TYPE_PLAN": "A Plan",
+          "VAULT_OBJECT_TYPE_PLAN_MIGRATION": "A PlanMigration",
+          "VAULT_OBJECT_TYPE_PLAN_SCHEDULE": "A PlanSchedule",
+          "VAULT_OBJECT_TYPE_PLAN_UPDATE": "A PlanUpdate",
+          "VAULT_OBJECT_TYPE_POLICY": "A Policy",
+          "VAULT_OBJECT_TYPE_POSTING": "A Posting",
+          "VAULT_OBJECT_TYPE_POSTINGS_API_CLIENT": "A PostingsApiClient",
+          "VAULT_OBJECT_TYPE_POSTING_INSTRUCTION_BATCH": "A PostingInstructionBatch",
+          "VAULT_OBJECT_TYPE_POSTING_INSTRUCTION_BATCH_ASYNC": "A PostingInstructionBatch created asynchronously",
+          "VAULT_OBJECT_TYPE_POST_POSTING_FAILURE": "A PostPostingFailure",
+          "VAULT_OBJECT_TYPE_PRODUCT": "A Product",
+          "VAULT_OBJECT_TYPE_PRODUCT_ACCOUNT_ASSOCIATION": "A ProductAccountAssociation",
+          "VAULT_OBJECT_TYPE_PRODUCT_VERSION": "A ProductVersion",
+          "VAULT_OBJECT_TYPE_PRODUCT_VERSION_PARAMETERS_TIMESERIES": "A ProductVersionParametersTimeseries",
+          "VAULT_OBJECT_TYPE_RESOURCE": "A Resource",
+          "VAULT_OBJECT_TYPE_RESOURCE_BATCH": "A ResourceBatch",
+          "VAULT_OBJECT_TYPE_RESTRICTION": "A Restriction",
+          "VAULT_OBJECT_TYPE_RESTRICTION_DEFINITION": "A RestrictionDefinition",
+          "VAULT_OBJECT_TYPE_RESTRICTION_SET": "A RestrictionSet",
+          "VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION": "A RestrictionSetDefinition",
+          "VAULT_OBJECT_TYPE_RESTRICTION_SET_DEFINITION_VERSION": "A RestrictionSetDefinitionVersion",
+          "VAULT_OBJECT_TYPE_ROLE": "A Role",
+          "VAULT_OBJECT_TYPE_ROLE_DATA_PERMISSION_ASSOC": "A RoleDataPermissionAssoc",
+          "VAULT_OBJECT_TYPE_ROLE_VAULT_PERMISSION_ASSOC": "A RoleVaultPermissionAssoc",
+          "VAULT_OBJECT_TYPE_SCHEDULE": "A Schedule",
+          "VAULT_OBJECT_TYPE_SCHEDULE_TAG": "A ScheduleTag",
+          "VAULT_OBJECT_TYPE_SCHEME": "A Scheme",
+          "VAULT_OBJECT_TYPE_SCHEME_CONFIG": "A SchemeConfig",
+          "VAULT_OBJECT_TYPE_SCHEME_MESSAGE": "A SchemeMessage",
+          "VAULT_OBJECT_TYPE_SERVICE_ACCOUNT": "A ServiceAccount",
+          "VAULT_OBJECT_TYPE_SMART_CONTRACT_MODULE_VERSIONS_LINK": "A SmartContractModuleVersionsLink",
+          "VAULT_OBJECT_TYPE_STANDING_ORDER_INSTRUCTION": "A StandingOrderInstruction",
+          "VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT": "A SupervisorContract",
+          "VAULT_OBJECT_TYPE_SUPERVISOR_CONTRACT_VERSION": "A SupervisorContractVersion",
+          "VAULT_OBJECT_TYPE_TASK": "A Task",
+          "VAULT_OBJECT_TYPE_TASK_THREAD": "A TaskThread",
+          "VAULT_OBJECT_TYPE_TASK_THREAD_HISTORY_ENTRY": "A TaskThreadHistoryEntry",
+          "VAULT_OBJECT_TYPE_TICKET": "A Ticket",
+          "VAULT_OBJECT_TYPE_TICKET_TAG": "A TicketTag",
+          "VAULT_OBJECT_TYPE_TICKET_UPDATE": "A TicketUpdate",
+          "VAULT_OBJECT_TYPE_TRANSACTION": "A Transaction",
+          "VAULT_OBJECT_TYPE_UK_BANK_ACCOUNT_NUMBER": "A UkBankAccountNumber",
+          "VAULT_OBJECT_TYPE_UNKNOWN": "An unknown object",
+          "VAULT_OBJECT_TYPE_UNSOLICITED_MESSAGE": "An UnsolicitedMessage",
+          "VAULT_OBJECT_TYPE_VAULT_PERMISSION": "A VaultPermission",
+          "VAULT_OBJECT_TYPE_VAULT_VERSION": "A VaultVersion",
+          "VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION": "A WorkflowDefinition",
+          "VAULT_OBJECT_TYPE_WORKFLOW_DEFINITION_VERSION": "A WorkflowDefinitionVersion",
+          "VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE": "A WorkflowInstance",
+          "VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_EVENT": "A WorkflowInstanceEvent",
+          "VAULT_OBJECT_TYPE_WORKFLOW_INSTANCE_STATE": "A WorkflowInstanceState"
+        }
+      },
+      "rangesTimestampRange": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Values in this range must be greater than or equal to the value of from."
+          },
+          "to": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Values in this range must be less than the value of to."
+          }
+        },
+        "description": "Describes a range of timestamps."
+      },
+      "audit_logsAuditLog": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique ID for this Audit Log."
+          },
+          "api_type": {
+            "$ref": "#/components/schemas/audit_logsAuditLogAPIType",
+            "description": "The API that recorded this request."
+          },
+          "endpoint_name": {
+            "type": "string",
+            "description": "The fully-quantifiable gRPC endpoint or Streaming API topic name this request was made to."
+          },
+          "rest_endpoint_name": {
+            "type": "string",
+            "description": "The correspondent REST endpoint that this request was made to, when applicable."
+          },
+          "create_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of when this request was first captured."
+          },
+          "request_initiator_id": {
+            "type": "string",
+            "description": "The ID of the Service Account that initiated this request."
+          },
+          "on_behalf_of_customer_id": {
+            "type": "string",
+            "description": "The ID of the customer on whose behalf this request was performed."
+          },
+          "on_behalf_of_employee_id": {
+            "type": "string",
+            "description": "The ID of the employee on whose behalf this request was performed."
+          },
+          "request_parameters": {
+            "type": "string",
+            "description": "A JSON string containing the request parameters. This field may be very big so it is not returned by default when requesting Audit Log(s)."
+          },
+          "response_status": {
+            "$ref": "#/components/schemas/audit_logsAuditLogResponseStatus",
+            "description": "The status of the request. Indicates if the captured request was successful for example."
+          },
+          "response_payload": {
+            "type": "string",
+            "description": "A JSON string containing the response payload if available. This will typically only be available for gRPC based APIs and when the `response_status` is not `UNDETERMINED_RESPONSE_STATUS`. This field may be very big so it is not returned by default when requesting Audit Log(s)."
+          },
+          "create_request_id": {
+            "type": "string",
+            "description": "The request ID that was used to create this log."
+          },
+          "vault_object_type": {
+            "$ref": "#/components/schemas/commonVaultObjectType",
+            "description": "Some Audit Logs are associated with Vault objects (Account, Customer, ...). Only mutation requests will capture this information. If the type can be determined, this field contains the type of that Vault object. Otherwise the value will be VAULT_OBJECT_TYPE_UNKNOWN and the `vault_object_ids` list will be empty. If the field is populated, then the `vault_object_ids` will contain at least one item."
+          },
+          "vault_object_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The IDs of the Vault Objects (if known) associated with this Audit Log. Empty if there is no association, or if one could not be determined."
+          },
+          "group_id": {
+            "type": "string",
+            "description": "An ID for correlating / grouping Audit and Action Logs generated by the same request to an API. This ID will be propagated on sub-requests triggered by that request."
+          }
+        },
+        "description": "AuditLog represents an action or a request performed on any of the Vault public APIs."
+      },
+      "audit_logsAuditLogAPIType": {
+        "type": "string",
+        "enum": [
+          "AUDIT_LOG_API_TYPE_UNKNOWN",
+          "AUDIT_LOG_API_TYPE_CORE_API_STREAM",
+          "AUDIT_LOG_API_TYPE_PAYMENTS_INTEGRATION_API",
+          "AUDIT_LOG_API_TYPE_LEGACY_ADMIN_API",
+          "AUDIT_LOG_API_TYPE_CORE_API",
+          "AUDIT_LOG_API_TYPE_AUDIT_API",
+          "AUDIT_LOG_API_TYPE_WORKFLOWS_API",
+          "AUDIT_LOG_API_TYPE_WORKFLOWS_API_STREAM",
+          "AUDIT_LOG_API_TYPE_XPL_API",
+          "AUDIT_LOG_API_TYPE_PAYMENT_HUB_API",
+          "AUDIT_LOG_API_TYPE_DATA_LOADER_API",
+          "AUDIT_LOG_API_TYPE_DATA_LOADER_STREAM_API",
+          "AUDIT_LOG_API_TYPE_XPL_API_STREAM",
+          "AUDIT_LOG_API_TYPE_PRODUCTS_API",
+          "AUDIT_LOG_API_TYPE_ACCESS_CONTROL_API",
+          "AUDIT_LOG_API_TYPE_PRODUCTS_API_STREAM"
+        ],
+        "default": "AUDIT_LOG_API_TYPE_UNKNOWN",
+        "description": "An enumeration of Vault public APIs.",
+        "x-enum-value-descriptions": {
+          "AUDIT_LOG_API_TYPE_ACCESS_CONTROL_API": "The Access Control API.",
+          "AUDIT_LOG_API_TYPE_AUDIT_API": "The Audit API.",
+          "AUDIT_LOG_API_TYPE_CORE_API": "The Core API.",
+          "AUDIT_LOG_API_TYPE_CORE_API_STREAM": "The Core Streaming API.",
+          "AUDIT_LOG_API_TYPE_DATA_LOADER_API": "The Data Loader API.",
+          "AUDIT_LOG_API_TYPE_DATA_LOADER_STREAM_API": "The Data Loader Stream API.",
+          "AUDIT_LOG_API_TYPE_LEGACY_ADMIN_API": "The legacy internal admin platform that is being phased out and replaced by Core API. This API is not publicly exposed. However, the Operations Dashboard uses it for some of its functionality; this means some Audit Logs will be associated with this API.",
+          "AUDIT_LOG_API_TYPE_PAYMENTS_INTEGRATION_API": "The Payments Integration (or Postings) API.",
+          "AUDIT_LOG_API_TYPE_PAYMENT_HUB_API": "The Payments Hub API.",
+          "AUDIT_LOG_API_TYPE_PRODUCTS_API": "The Products API.",
+          "AUDIT_LOG_API_TYPE_PRODUCTS_API_STREAM": "The Products Streaming API.",
+          "AUDIT_LOG_API_TYPE_UNKNOWN": "The default enum value. A unknown public Vault API.",
+          "AUDIT_LOG_API_TYPE_WORKFLOWS_API": "The Workflows API.",
+          "AUDIT_LOG_API_TYPE_WORKFLOWS_API_STREAM": "The Workflows Streaming API.",
+          "AUDIT_LOG_API_TYPE_XPL_API": "The Experience Layer API.",
+          "AUDIT_LOG_API_TYPE_XPL_API_STREAM": "The Experience Layer Streaming API."
+        }
+      },
+      "audit_logsAuditLogResponseStatus": {
+        "type": "string",
+        "enum": [
+          "AUDIT_LOG_RESPONSE_STATUS_UNKNOWN",
+          "AUDIT_LOG_RESPONSE_STATUS_UNDETERMINED",
+          "AUDIT_LOG_RESPONSE_STATUS_SUCCESS",
+          "AUDIT_LOG_RESPONSE_STATUS_ERROR"
+        ],
+        "default": "AUDIT_LOG_RESPONSE_STATUS_UNKNOWN",
+        "description": "An enumeration of possible captured response statuses.",
+        "x-enum-value-descriptions": {
+          "AUDIT_LOG_RESPONSE_STATUS_ERROR": "The captured request errored.",
+          "AUDIT_LOG_RESPONSE_STATUS_SUCCESS": "The captured request succeeded.",
+          "AUDIT_LOG_RESPONSE_STATUS_UNDETERMINED": "The status of this captured request cannot be determined. This will typically be the case for asynchronous APIs like the Core Streaming API.",
+          "AUDIT_LOG_RESPONSE_STATUS_UNKNOWN": "The default enum value. The response is unknown."
+        }
+      },
+      "audit_logsBatchGetAuditLogsRequestIncludeField": {
+        "type": "string",
+        "enum": [
+          "INCLUDE_FIELD_REQUEST_PARAMETERS"
+        ],
+        "default": "INCLUDE_FIELD_REQUEST_PARAMETERS",
+        "description": "Enumeration of the Audit Log fields that are omitted by default. IncludeField values are used in `fields_to_include` in the request to specify which fields should be populated in the Audit Logs.",
+        "x-enum-value-descriptions": {
+          "INCLUDE_FIELD_REQUEST_PARAMETERS": "Includes the request parameters field."
+        }
+      },
+      "audit_logsBatchGetAuditLogsResponse": {
+        "type": "object",
+        "properties": {
+          "audit_logs": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/audit_logsAuditLog"
+            },
+            "description": "A mapping of Audit Log ID to Audit Log."
+          }
+        }
+      },
+      "audit_logsGetAuditLogRequestIncludeField": {
+        "type": "string",
+        "enum": [
+          "INCLUDE_FIELD_REQUEST_PARAMETERS",
+          "INCLUDE_FIELD_RESPONSE_PAYLOAD"
+        ],
+        "default": "INCLUDE_FIELD_REQUEST_PARAMETERS",
+        "description": "Enumeration of the Audit Log fields that are omitted by default. IncludeField values are used in `fields_to_include` in the request to specify which fields should be populated in the Audit Logs.",
+        "x-enum-value-descriptions": {
+          "INCLUDE_FIELD_REQUEST_PARAMETERS": "Includes the request parameters field.",
+          "INCLUDE_FIELD_RESPONSE_PAYLOAD": "Includes the response payload field."
+        }
+      },
+      "audit_logsListAuditLogsRequestIncludeField": {
+        "type": "string",
+        "enum": [
+          "INCLUDE_FIELD_REQUEST_PARAMETERS"
+        ],
+        "default": "INCLUDE_FIELD_REQUEST_PARAMETERS",
+        "description": "Enumeration of the Audit Log fields that are omitted by default. IncludeField values are used in `fields_to_include` in the request to specify which fields should be populated in the Audit Logs.",
+        "x-enum-value-descriptions": {
+          "INCLUDE_FIELD_REQUEST_PARAMETERS": "Includes the request parameters field."
+        }
+      },
+      "audit_logsListAuditLogsResponse": {
+        "type": "object",
+        "properties": {
+          "audit_logs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/audit_logsAuditLog"
+            },
+            "description": "A list of matching Audit Logs."
+          },
+          "previous_page_token": {
+            "type": "string",
+            "description": "The pagination token used to retrieve the previous page. If empty, this is the first page of results."
+          },
+          "next_page_token": {
+            "type": "string",
+            "description": "The pagination token used to retrieve the next page. If empty, this is the last page of results."
+          }
+        }
+      },
+      "commonAccessControlContext": {
+        "type": "object",
+        "properties": {
+          "employee_id": {
+            "type": "string"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "description": "Specifies the data required for policy evaluation."
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Auth-Token"
+      }
+    },
+    "requestBodies": {}
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}
