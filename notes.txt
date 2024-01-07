@@ -14,3 +14,4 @@ docker run -p 84:8080 -e SWAGGER_JSON=/tmp/payment_hub_api.json -v C:\Users\fath
 docker run -p 85:8080 -e SWAGGER_JSON=/tmp/workflows_api.json -v C:\Users\fathullahharun\Downloads\tm_api_v2:/tmp swaggerapi/swagger-ui
 docker run -p 86:8080 -e SWAGGER_JSON=/tmp/xpl_api.json -v C:\Users\fathullahharun\Downloads\tm_api_v2:/tmp swaggerapi/swagger-ui
 
+https://github.com/swagger-api/swagger-ui/blob/master/docs/usage/installation.md
