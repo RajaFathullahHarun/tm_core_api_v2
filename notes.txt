@@ -1,0 +1,16 @@
+I downloaded the json files in this website : https://docs.thoughtmachine.net/vault-core/4-6/EN/api/
+
+I then placed this files under C:\Users\fathullahharun\Downloads\tm_api_v2
+
+cd C:\Users\fathullahharun\Downloads\tm_api_v2
+
+Then I ran the commands below in order to run the swagger UI in my local host depends on the port
+
+docker run -p 80:8080 -e SWAGGER_JSON=/tmp/core_api.json -v C:\Users\fathullahharun\Downloads\tm_api_v2:/tmp swaggerapi/swagger-ui
+docker run -p 81:8080 -e SWAGGER_JSON=/tmp/audit_api.json -v C:\Users\fathullahharun\Downloads\tm_api_v2:/tmp swaggerapi/swagger-ui
+docker run -p 82:8080 -e SWAGGER_JSON=/tmp/access_control_api.json -v C:\Users\fathullahharun\Downloads\tm_api_v2:/tmp swaggerapi/swagger-ui
+docker run -p 83:8080 -e SWAGGER_JSON=/tmp/data_loader_api.json -v C:\Users\fathullahharun\Downloads\tm_api_v2:/tmp swaggerapi/swagger-ui
+docker run -p 84:8080 -e SWAGGER_JSON=/tmp/payment_hub_api.json -v C:\Users\fathullahharun\Downloads\tm_api_v2:/tmp swaggerapi/swagger-ui
+docker run -p 85:8080 -e SWAGGER_JSON=/tmp/workflows_api.json -v C:\Users\fathullahharun\Downloads\tm_api_v2:/tmp swaggerapi/swagger-ui
+docker run -p 86:8080 -e SWAGGER_JSON=/tmp/xpl_api.json -v C:\Users\fathullahharun\Downloads\tm_api_v2:/tmp swaggerapi/swagger-ui
+
